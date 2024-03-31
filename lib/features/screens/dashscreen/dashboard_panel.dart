@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import '../../../core/controllers/dashscreen/dash_page_manager_controller.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/constants/icon_paths.dart';
-import '../auth/un_authenticated_screen.dart';
-import '../cafe_menu/cafe_menu_screen.dart';
+import '../add_event/event_add_screen.dart';
+import '../events/events_screen.dart';
 import '../home/home_screen.dart';
 import '../profile/profile_screen.dart';
-import '../table_booking/table_booking_screen.dart';
 
 class DashPageManager extends StatelessWidget {
   static const String routeName = "/dashscreen";
@@ -70,11 +69,11 @@ class DashPageManager extends StatelessWidget {
                   height: 20,
                   width: 20,
                 ),
-                label: "Table",
+                label: "Event",
               ),
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
-                  IconPath.user,
+                  IconPath.calendar,
                   height: 20,
                   width: 20,
                   colorFilter: const ColorFilter.mode(
@@ -83,11 +82,11 @@ class DashPageManager extends StatelessWidget {
                   ),
                 ),
                 icon: SvgPicture.asset(
-                  IconPath.information,
+                  IconPath.calendar,
                   height: 20,
                   width: 20,
                 ),
-                label: "Menu",
+                label: "Events",
               ),
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
@@ -116,10 +115,10 @@ class DashPageManager extends StatelessWidget {
         controller: c.pageController,
         children: [
           HomeScreen(),
-          TableBookingScreen(),
-          CafeMenuScreen(),
+          EventAddScreen(),
+          EventsScreen(),
           ProfileScreen(),
-          UnAuthenticatedScreen(),
+          // UnAuthenticatedScreen(),
         ],
       ),
     );

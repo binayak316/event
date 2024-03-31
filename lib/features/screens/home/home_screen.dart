@@ -1,12 +1,13 @@
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
+import 'package:event/core/widgets/common/network_imge.dart';
+import 'package:event/core/widgets/common/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/controllers/dashscreen/home_screen_controller.dart';
-import '../../../core/widgets/common/text_form_field.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = "/home-screen";
@@ -32,6 +33,7 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 10,
@@ -45,49 +47,62 @@ class HomeScreen extends StatelessWidget {
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.name,
             ),
-            const SizedBox(
-              height: 10,
-            ),
 
-            const SizedBox(
-              height: 10,
-            ),
-            // Expanded(
-            //   child: SizedBox(
-            //     child: GridView.builder(
-            //       shrinkWrap: true,
-            //       // physics: AlwaysScrollableScrollPhysics(),
-            //       // physics: const NeverScrollableScrollPhysics(),
-            //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //           crossAxisCount: 2, // number of items in each row
-            //           mainAxisSpacing: 20, // spacing between rows
-            //           crossAxisSpacing: 20,
-            //           childAspectRatio: 0.9 // spacing between columns
-            //           ),
-            //       // padding: const EdgeInsets.all(
-            //       //     8.0), // padding around the grid
-            //       itemCount: 20,
-            //       itemBuilder: (context, index) {
-            //         return InkWell(
-            //           onTap: () {
-            //             // Get.toNamed(Routes.map_screen);
-            //           },
-            //           child: Item(
-            //             icon: IconPath.apple,
-            //             title: "Cappacino",
-            //             price: "Rs. 499",
-            //             onTap: () {
-            //               // Get.toNamed(Routes.map_screen,
-            //               //     arguments: category.id);
-
-            //               Get.toNamed(ProductDetailScreen.routeName);
-            //             },
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
+            // const SizedBox(
+            //   height: 10,
             // ),
+
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                EventCategory(
+                  category: "Music",
+                ),
+                EventCategory(
+                  category: "Music",
+                ),
+                EventCategory(
+                  category: "Music",
+                ),
+              ],
+            ),
+
+            Text(
+              "Popular Events",
+              style: CustomTextStyles.f20W600(color: AppColors.primary),
+            ),
+            Expanded(
+              child: SizedBox(
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  // physics: AlwaysScrollableScrollPhysics(),
+                  // physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // number of items in each row
+                      mainAxisSpacing: 20, // spacing between rows
+                      crossAxisSpacing: 20,
+                      childAspectRatio: 0.9 // spacing between columns
+                      ),
+                  // padding: const EdgeInsets.all(
+                  //     8.0), // padding around the grid
+                  itemCount: 20,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        // Get.toNamed(Routes.map_screen);
+                      },
+                      child: EventCard(
+                        icon: IconPath.apple,
+                        title: "New Year Eve",
+                        location: "Pokhra-6-leknath",
+                        price: "Rs. 1000",
+                        onTap: () {},
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -95,11 +110,11 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class CoffeeCategory extends StatelessWidget {
+class EventCategory extends StatelessWidget {
   final String? category;
   final Color? backgroundColor;
   final Color? textColor;
-  const CoffeeCategory({
+  const EventCategory({
     super.key,
     required this.category,
     this.textColor,
@@ -109,32 +124,39 @@ class CoffeeCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      decoration: BoxDecoration(
-        color: AppColors.primary ?? backgroundColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(
-        category ?? "",
-        style: CustomTextStyles.f16W300(
-            //TODO condition anusar check garne
-            color: AppColors.whiteColor),
+      padding: const EdgeInsets.all(2),
+      decoration: const BoxDecoration(),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: const SkyNetworkImage(
+              imageUrl: "https://picsum.photos/200/300",
+              width: 60,
+              height: 60,
+              boxFit: BoxFit.fill,
+            ),
+          ),
+          Text("Random Name")
+        ],
       ),
     );
   }
 }
 
-class Item extends StatelessWidget {
+class EventCard extends StatelessWidget {
   final String? icon;
   final String? title;
   final VoidCallback? onTap;
+  final String? location;
   final String? price;
 
-  Item({
+  EventCard({
     super.key,
     required this.icon,
     required this.title,
     this.onTap,
+    this.location,
     required this.price,
   });
 
@@ -187,6 +209,7 @@ class Item extends StatelessWidget {
             Expanded(
                 flex: 2,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title ?? "",
@@ -200,28 +223,49 @@ class Item extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      price ?? "",
+                      location ?? "",
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontSize: 14,
-                            color: AppColors.primary,
+                            color: AppColors.blackColor,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
                     const SizedBox(
                       height: 4,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        "Order Now",
-                        style: CustomTextStyles.f14W300(
-                            color: AppColors.whiteColor),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FittedBox(
+                          child: Text(
+                            price ?? "",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontSize: 14,
+                                  color: AppColors.blackColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            "Book Now",
+                            style: CustomTextStyles.f14W300(
+                                color: AppColors.whiteColor),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 )),

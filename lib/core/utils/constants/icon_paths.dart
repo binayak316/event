@@ -15,6 +15,8 @@ class IconPath {
   static const String unAuth = "$basePath/unAuth.svg";
   static const String logout = "$basePath/logout.svg";
   static const String map = "$basePath/map.svg";
+  static const String calendar = "$basePath/calendar.svg";
+
   static const String unlock = "$basePath/unlock.svg";
 
   //cafe mgmt icons

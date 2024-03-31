@@ -23,7 +23,7 @@ class SplashScreen extends StatelessWidget {
               height: 20,
             ),
             Text(
-              "Inhale coffee, exhale baad thoughts",
+              "Let us to handle your EVENT",
               style: CustomTextStyles.f16W600(color: AppColors.blackColor),
             )
           ],

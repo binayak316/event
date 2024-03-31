@@ -24,37 +24,37 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            decoration: const BoxDecoration(
-              color: AppColors.whiteColor,
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(255, 204, 203, 203),
-                  blurRadius: 2.0,
-                  spreadRadius: 1,
-                  offset: Offset(
-                    0,
-                    3,
-                  ),
-                )
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //TODO logo
-                Text(
-                  "Profile",
-                  style: CustomTextStyles.f16W600(),
-                ),
-                const Icon(
-                  Icons.search,
-                  color: AppColors.primary,
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          //   decoration: const BoxDecoration(
+          //     color: AppColors.whiteColor,
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: Color.fromARGB(255, 204, 203, 203),
+          //         blurRadius: 2.0,
+          //         spreadRadius: 1,
+          //         offset: Offset(
+          //           0,
+          //           3,
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       //TODO logo
+          //       Text(
+          //         "Profile",
+          //         style: CustomTextStyles.f16W600(),
+          //       ),
+          //       const Icon(
+          //         Icons.search,
+          //         color: AppColors.primary,
+          //       ),
+          //     ],
+          //   ),
+          // ),
           const SizedBox(
             height: 10,
           ),
@@ -75,9 +75,18 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(
-                  "Sital Bhandari",
-                  style: CustomTextStyles.f20W600(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      c.coreController.currentUser.value?.name ?? "",
+                      style: CustomTextStyles.f20W600(),
+                    ),
+                    Text(
+                      c.coreController.currentUser.value?.email ?? "",
+                      style: CustomTextStyles.f16W700(),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -127,7 +136,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 ProfileTiles(
                   onTap: () {
-                     c.openBottomSheetChangePW();
+                    c.openBottomSheetChangePW();
                   },
                   title: "Change password",
                 ),
