@@ -17,13 +17,7 @@ class Api {
   static final String changePw = "$baseUrl$prefix$auth/change-password";
 
   // homepage
-  static final String getMoviesCollection = "$baseUrl$prefix/movie/lists";
-  static final String movieDetail = "$baseUrl/api/movie/list/#id#";
-
-  // homepage2
-  static final String getDate = "$baseUrl$prefix/movie/get-date";
-
-  // -----------------------------
-  static final String seatAvailability =
-      "$baseUrl$prefix/movie/seat-availability";
+  static final String storeEvent = "$baseUrl$prefix$auth/store-event";
+  static final String becomeOrganizer =
+      "$baseUrl$prefix$auth//become-organizer";
 }

@@ -3,6 +3,7 @@ import 'package:event/core/utils/helpers/storage_helper.dart';
 import 'package:event/core/widgets/custom/app_progress_dialog.dart';
 import 'package:event/features/screens/auth/login_screen.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../model/user_model.dart';
 
@@ -52,23 +53,23 @@ class CoreController extends GetxController {
     Get.offAllNamed(LoginScreen.routeName);
   }
 
-//   // Future<bool> checkCameraPermission() async {
-//   //   bool hasAccess = false;
+  Future<bool> checkCameraPermission() async {
+    bool hasAccess = false;
 
-//   //   var status = await Permission.camera.status;
+    var status = await Permission.camera.status;
 
-//   //   hasAccess = status != PermissionStatus.denied &&
-//   //       status != PermissionStatus.permanentlyDenied;
+    hasAccess = status != PermissionStatus.denied &&
+        status != PermissionStatus.permanentlyDenied;
 
-//   //   if (hasAccess) {
-//   //     return hasAccess;
-//   //   }
+    if (hasAccess) {
+      return hasAccess;
+    }
 
-//   //   var permission = await Permission.camera.request();
+    var permission = await Permission.camera.request();
 
-//   //   hasAccess = permission != PermissionStatus.denied &&
-//   //       permission != PermissionStatus.permanentlyDenied;
+    hasAccess = permission != PermissionStatus.denied &&
+        permission != PermissionStatus.permanentlyDenied;
 
-//   //   return hasAccess;
-//   // }
+    return hasAccess;
+  }
 }

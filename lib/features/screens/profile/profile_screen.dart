@@ -121,6 +121,28 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
+                // if (c.coreController.currentUser.value == 1) //0 means organizer
+                ProfileTiles(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext ctx) {
+                          return CustomAlertDialog(
+                            // title: "Logout Confirmation",
+                            message: "You want to become an organizer ?",
+                            onConfirm: () {
+                              c.becomeBoss();
+                            },
+                            confirmText: "Yes",
+                          );
+                        });
+                  },
+                  iconUrl: IconPath.organizer,
+                  title: "Become an Organizer",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 ProfileTiles(
                   onTap: () {
                     // Get.toNamed(FavouritesScreen.routeName);

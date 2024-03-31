@@ -1,5 +1,6 @@
 import 'package:event/core/controllers/core_controller.dart';
 import 'package:event/core/repo/auth_repo.dart';
+import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/widgets/custom/app_progress_dialog.dart';
 import 'package:event/core/widgets/custom/app_snackbar.dart';
@@ -59,5 +60,24 @@ class ProfileController extends GetxController {
             GearSnackBar.error(title: "Password Change", message: message);
           });
     }
+  }
+
+  Future<void> becomeBoss() async {
+    loading.show();
+    await EventRepo.becomeOrganizer(
+        userId: int.parse(coreController.currentUser.value!.id.toString()),
+        onSuccess: (user) {
+          coreController.loadCurrentUser();
+
+          loading.hide();
+          Get.back();
+          // Get.offAllNamed(DashPageManager.routeName);
+          GearSnackBar.success(
+              title: "Organizer", message: "You are promoted to organizer.");
+        },
+        onError: (message) {
+          loading.hide();
+          GearSnackBar.error(title: "Organizer", message: message);
+        });
   }
 }
