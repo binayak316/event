@@ -1,11 +1,11 @@
 import 'package:event/core/controllers/dashscreen/event/event_add_controller.dart';
 import 'package:event/core/controllers/dashscreen/event/event_controller.dart';
+import 'package:event/core/controllers/dashscreen/event/event_detail_controller.dart';
 import 'package:event/core/controllers/dashscreen/profile/profile_controller.dart';
+import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../features/screens/dashscreen/dashboard_panel.dart';
-import '../../../features/screens/product/controller/product_controller.dart';
-import '../../../features/screens/product/presentation/product_detail_screen.dart';
 import '../../../features/screens/recent_orders/controller/recent_order_controller.dart';
 import '../../../features/screens/recent_orders/presentation/recent_order_screen.dart';
 import '../../controllers/dashscreen/dash_page_manager_controller.dart';
@@ -27,11 +27,11 @@ final List<GetPage> dashScreenPages = <GetPage>[
   ),
 
   GetPage(
-    name: ProductDetailScreen.routeName,
-    page: () => ProductDetailScreen(),
+    name: EventDetailScreen.routeName,
+    page: () => EventDetailScreen(),
     binding: BindingsBuilder(
       () {
-        Get.lazyPut(() => ProductDetailController());
+        Get.lazyPut(() => EventDetailController());
       },
     ),
   ),

@@ -90,4 +90,31 @@ class EventRepo {
       onError(Messages.error);
     }
   }
+
+  static Future<void> getEventDetails({
+    required int eventId,
+    required Function(EventModel event) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = (Api.eventDetails.replaceAll("#id#", eventId.toString()));
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        var event = EventModel.fromJson(data['data']);
+        onSuccess(event);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.eventDetails, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 }

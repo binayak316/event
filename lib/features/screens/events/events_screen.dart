@@ -4,6 +4,7 @@ import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
+import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -66,26 +67,21 @@ class EventsScreen extends StatelessWidget {
 }
 
 class EventTileCard extends StatelessWidget {
-  // final String? imageUrl;
-  // final String? eventTitle;
-  // final VoidCallback? onTap;
-  // final String? location;
-  // final String? price;
+ 
   final EventModel eventModel;
 
   EventTileCard(
       {super.key,
-      // this.onTap,
-      // this.location,
-      // required this.price,
-      // this.imageUrl,
-      // this.eventTitle,
+     
       required this.eventModel});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Get.toNamed(EventDetailScreen.routeName,
+            arguments: {"event": eventModel});
+      },
       child: Container(
         padding: const EdgeInsets.only(left: 6, right: 6, top: 4, bottom: 6),
         decoration: BoxDecoration(

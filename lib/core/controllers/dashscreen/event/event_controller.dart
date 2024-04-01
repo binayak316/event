@@ -2,17 +2,22 @@ import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
+import 'package:event/core/widgets/custom/app_snackbar.dart';
 import 'package:get/get.dart';
 
-class EventsController extends GetxController{
-   RxList<EventModel> eventList = RxList();
-//   RxList<MovieDate> dates = RxList();
-
+class EventsController extends GetxController {
+  RxList<EventModel> eventList = RxList();
   Rx<PageState> pageState = PageState.LOADING.obs;
 
   @override
   void onInit() {
     getAllEvents();
+
+    // var args = Get.arguments;
+    // if (args != null) {
+    //   print("--------------------args=========${args}");
+    //   event.value = args['event'];
+    // }
     super.onInit();
   }
 
@@ -37,5 +42,4 @@ class EventsController extends GetxController{
       },
     );
   }
-
 }
