@@ -17,7 +17,8 @@ class Api {
   static final String changePw = "$baseUrl$prefix$auth/change-password";
 
   // homepage
+  static final String getAllEvents = "$baseUrl$prefix$auth/getallevent";
+
   static final String storeEvent = "$baseUrl$prefix$auth/store-event";
-  static final String becomeOrganizer =
-      "$baseUrl$prefix$auth//become-organizer";
+  static final String becomeOrganizer = "$baseUrl$prefix$auth/become-organizer";
 }

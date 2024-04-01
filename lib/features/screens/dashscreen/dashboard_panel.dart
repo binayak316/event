@@ -14,7 +14,6 @@ class DashPageManager extends StatelessWidget {
   static const String routeName = "/dashscreen";
 
   final c = Get.find<DashboardPanelController>();
-
   DashPageManager({super.key});
   @override
   Widget build(BuildContext context) {
@@ -54,23 +53,24 @@ class DashPageManager extends StatelessWidget {
                 ),
                 label: "Home",
               ),
-              BottomNavigationBarItem(
-                activeIcon: SvgPicture.asset(
-                  IconPath.upcoming,
-                  height: 20,
-                  width: 20,
-                  colorFilter: const ColorFilter.mode(
-                    AppColors.primary,
-                    BlendMode.srcIn,
+              if (c.coreController.currentUser.value?.status == "1")
+                BottomNavigationBarItem(
+                  activeIcon: SvgPicture.asset(
+                    IconPath.upcoming,
+                    height: 20,
+                    width: 20,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.primary,
+                      BlendMode.srcIn,
+                    ),
                   ),
+                  icon: SvgPicture.asset(
+                    IconPath.upcoming,
+                    height: 20,
+                    width: 20,
+                  ),
+                  label: "Event",
                 ),
-                icon: SvgPicture.asset(
-                  IconPath.upcoming,
-                  height: 20,
-                  width: 20,
-                ),
-                label: "Event",
-              ),
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
                   IconPath.calendar,
@@ -115,7 +115,10 @@ class DashPageManager extends StatelessWidget {
         controller: c.pageController,
         children: [
           HomeScreen(),
-          EventAddScreen(),
+          // if(c.coreController.currentUser.value?.status =="1")
+          // ?           EventAddScreen() : EventUserScreen(),
+          if (c.coreController.currentUser.value?.status == "1")
+            EventAddScreen(),
           EventsScreen(),
           ProfileScreen(),
           // UnAuthenticatedScreen(),

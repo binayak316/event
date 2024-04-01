@@ -22,11 +22,14 @@ class DashboardPanelController extends GetxController {
     //   return;
     // } else {
 
-    if (index == 0 || index == 1 || index == 2 || index == 3) {
-      currentIndex.value = index;
-      pageController.jumpToPage(index);
-      return;
-    }
+    // if (index == 0 || index == 1 || index == 2 || index == 3) {
+    //   currentIndex.value = index;
+    //   pageController.jumpToPage(index);
+    //   return;
+    // }
+    currentIndex.value = index;
+    pageController.jumpToPage(index);
+    return;
     // }
   }
 }

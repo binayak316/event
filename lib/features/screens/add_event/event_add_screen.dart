@@ -307,9 +307,6 @@ class EventAddScreen extends StatelessWidget {
                     textInputAction: TextInputAction.next,
                     textInputType: TextInputType.emailAddress,
                     validator: Validators.checknameEmpty,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
                     controller: c.eventDescriptionController,
                   ),
                   const SizedBox(

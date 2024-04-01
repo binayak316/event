@@ -5,60 +5,44 @@
 // import 'package:chalchitra2/core/utils/helpers/log_helper.dart';
 // import 'package:get/get.dart';
 
+import 'package:event/core/model/event/event_model.dart';
+import 'package:event/core/repo/event/event_repo.dart';
+import 'package:event/core/utils/constants/enums.dart';
+import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:get/get.dart';
 
 class HomeScreenController extends GetxController {
-//   RxList<MovieModel> movies = RxList();
-//   RxList<MovieDate> dates = RxList();
+//   RxList<EventModel> eventList = RxList();
+// //   RxList<MovieDate> dates = RxList();
 
-//   Rx<AppPageState> pageState = AppPageState.loading.obs;
+//   Rx<PageState> pageState = PageState.LOADING.obs;
 
 //   @override
 //   void onInit() {
-//     getAllMovies();
-//     getAllDates();
+//     getAllEvents();
 //     super.onInit();
 //   }
 
-//   RxInt tappedIndex = RxInt(0);
+// //   RxInt tappedIndex = RxInt(0);
 
-//   RxString movieDateStore = RxString("");
+// //   RxString movieDateStore = RxString("");
 
-//   void getAllMovies({String? date}) async {
-//     movies.clear();
-//     MovieRepo.getAllMovies(
-//       date: date,
-//       onSuccess: (movie) {
-//         if (movie.isEmpty) {
-//           pageState.value = AppPageState.empty;
+//   void getAllEvents() async {
+//     eventList.clear();
+//     EventRepo.getAllEvents(
+//       onSuccess: (events) {
+//         if (events.isEmpty) {
+//           pageState.value = PageState.EMPTY;
 //         } else {
-//           movies.addAll(movie);
-//           pageState.value = AppPageState.normal;
+//           eventList.addAll(events);
+//           pageState.value = PageState.NORMAL;
 //         }
 //       },
 //       onError: (message) {
-//         pageState.value = AppPageState.error;
+//         pageState.value = PageState.ERROR;
 //         LogHelper.error(message);
 //       },
 //     );
 //   }
 
-//   void getAllDates() async {
-//     // loading state
-//     movies.clear();
-//     MovieRepo.getAllDate(
-//       onSuccess: (moviesDate) {
-//         if (moviesDate.isEmpty) {
-//           pageState.value = AppPageState.empty;
-//         } else {
-//           dates.addAll(moviesDate);
-//           pageState.value = AppPageState.normal;
-//         }
-//       },
-//       onError: (message) {
-//         pageState.value = AppPageState.error;
-//         LogHelper.error(message);
-//       },
-//     );
-//   }
 }

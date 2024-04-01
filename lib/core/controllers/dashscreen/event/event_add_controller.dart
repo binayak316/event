@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:event/core/controllers/dashscreen/dash_page_manager_controller.dart';
 import 'package:event/core/model/event/add_event_request_model.dart';
 import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/helpers/xosial_date_piceker.dart';
@@ -80,6 +79,20 @@ class EventAddController extends GetxController {
   }
 
   ProgressDialog loading = ProgressDialog();
+  void clearVariables() {
+    eventNameController.text = '';
+    eventDateController.text = '';
+    eventTimeController.text = '';
+    // eventTypeController.text = '';
+    pickedFile.value = null;
+    eventVenueController.clear();
+    eventVipPriceController.text = '';
+    totalSeatsController.text = '';
+    eventPublicPriceController.text = '';
+    eventDescriptionController.text = '';
+    totalVipSeatsController.text = '';
+    totalPublicseatsController.text = '';
+  }
 
   Future<void> onSubmit() async {
     if (eventKey.currentState!.validate()) {
@@ -89,8 +102,10 @@ class EventAddController extends GetxController {
         eventDate: eventDateController.text,
         eventTime: eventTimeController.text,
         // evetType: eventTypeController.text,
+        thumbnail: pickedFile.toString(),
         location: eventVenueController.text,
         vipSeatsPrice: eventVipPriceController.text,
+        totalSeats: totalSeatsController.text,
         publicSeatsPrice: eventPublicPriceController.text,
         description: eventDescriptionController.text,
         totalVipSeats: totalVipSeatsController.text,
@@ -101,8 +116,9 @@ class EventAddController extends GetxController {
           onSuccess: (message) {
             loading.hide();
             // Get.offAllNamed(DashPageManager.routeName);
-            Get.put(DashboardPanelController()).currentIndex.value =
-                0; //TODO implementation
+            // Get.put(DashboardPanelController()).currentIndex.value =
+            //     0; //TODO implementation
+            clearVariables();
             GearSnackBar.success(
                 title: "Add Event Success",
                 message: "Event Added successfully");

@@ -1,4 +1,5 @@
 import 'package:event/core/controllers/dashscreen/event/event_add_controller.dart';
+import 'package:event/core/controllers/dashscreen/event/event_controller.dart';
 import 'package:event/core/controllers/dashscreen/profile/profile_controller.dart';
 import 'package:get/get.dart';
 
@@ -20,11 +21,7 @@ final List<GetPage> dashScreenPages = <GetPage>[
         Get.lazyPut(() => HomeScreenController());
         Get.lazyPut(() => ProfileController());
         Get.lazyPut(() => EventAddController());
-
-        // Get.lazyPut(() => ProfileController());
-        // Get.lazyPut(() => ProfileController());
-        // Get.lazyPut(() => SettingsController());
-        // Get.lazyPut(() => GearListCreationController());
+        Get.lazyPut(() => EventsController());
       },
     ),
   ),

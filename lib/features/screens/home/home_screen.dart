@@ -197,11 +197,20 @@ class EventCard extends StatelessWidget {
               flex: 3,
               child: Align(
                 alignment: Alignment.center,
-                child: SvgPicture.asset(
-                  "$icon",
+                child:
+                    //  SvgPicture.asset(
+                    //   "$icon",
+                    //   height: 80,
+                    //   width: 80,
+                    //   alignment: Alignment.center,
+                    // ),
+                    SkyNetworkImage(
+                  imageUrl: "",
+                  // imageUrl: "${Api.imageUrl}${cafeItem.imageModel?.fileName}",
                   height: 80,
-                  width: 80,
-                  alignment: Alignment.center,
+                  // width: 80,
+                  boxFit: BoxFit.cover,
+                  // alignment: Alignment.center,
                 ),
               ),
             ),

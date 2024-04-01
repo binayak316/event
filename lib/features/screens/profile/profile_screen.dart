@@ -17,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(c.coreController.currentUser.value?.status);
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -121,25 +122,27 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                // if (c.coreController.currentUser.value == 1) //0 means organizer
-                ProfileTiles(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext ctx) {
-                          return CustomAlertDialog(
-                            // title: "Logout Confirmation",
-                            message: "You want to become an organizer ?",
-                            onConfirm: () {
-                              c.becomeBoss();
-                            },
-                            confirmText: "Yes",
-                          );
-                        });
-                  },
-                  iconUrl: IconPath.organizer,
-                  title: "Become an Organizer",
-                ),
+                // ignore: unrelated_type_equality_checks
+                if (c.coreController.currentUser.value?.status !=
+                    "1") //1 means organizer
+                  ProfileTiles(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext ctx) {
+                            return CustomAlertDialog(
+                              // title: "Logout Confirmation",
+                              message: "You want to become an organizer ?",
+                              onConfirm: () {
+                                c.becomeBoss();
+                              },
+                              confirmText: "Yes",
+                            );
+                          });
+                    },
+                    iconUrl: IconPath.organizer,
+                    title: "Become an Organizer",
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
