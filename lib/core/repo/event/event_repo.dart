@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/add_event_request_model.dart';
 import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
@@ -9,6 +10,32 @@ import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:http/http.dart' as http;
 
 class EventRepo {
+  static Future<void> getCategories({
+    required Function(List<CategoryModel> events) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getCategories;
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        var categories = categoriesFromJson(data['data']);
+        onSuccess(categories);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getCategories, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
   static Future<void> becomeOrganizer({
     required int userId,
     required Function(String message) onSuccess,
@@ -114,6 +141,58 @@ class EventRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.eventDetails, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getPopularEvents({
+    required Function(List<EventModel> events) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getallevent;
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        var events = eventsFromJson(data['data']);
+        onSuccess(events);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getallevent, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getAllMyEvents({
+    required Function(List<EventModel> events) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.myEvents;
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        var events = eventsFromJson(data['data']);
+        onSuccess(events);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.myEvents, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

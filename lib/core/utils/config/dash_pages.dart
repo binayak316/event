@@ -6,8 +6,8 @@ import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../features/screens/dashscreen/dashboard_panel.dart';
-import '../../../features/screens/recent_orders/controller/recent_order_controller.dart';
-import '../../../features/screens/recent_orders/presentation/recent_order_screen.dart';
+import '../../../features/screens/my_events/controller/my_event_controller.dart';
+import '../../../features/screens/my_events/presentation/my_events_screen.dart';
 import '../../controllers/dashscreen/dash_page_manager_controller.dart';
 import '../../controllers/dashscreen/home_screen_controller.dart';
 
@@ -47,11 +47,11 @@ final List<GetPage> dashScreenPages = <GetPage>[
   // ),
 
   GetPage(
-    name: RecentOrdersScreen.routeName,
-    page: () => RecentOrdersScreen(),
+    name: MyEventsScreen.routeName,
+    page: () => MyEventsScreen(),
     binding: BindingsBuilder(
       () {
-        Get.lazyPut(() => RecentOrderController());
+        Get.lazyPut(() => myEventController());
       },
     ),
   ),

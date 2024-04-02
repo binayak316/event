@@ -21,6 +21,12 @@ class Api {
 
   static final String storeEvent = "$baseUrl$prefix$auth/store-event";
   static final String becomeOrganizer = "$baseUrl$prefix$auth/become-organizer";
-    static final String eventDetails = "$baseUrl$prefix$auth/geteventdetails/#id#";
+  static final String eventDetails =
+      "$baseUrl$prefix$auth/geteventdetails/#id#";
+
+  static final String myEvents = "$baseUrl$prefix$auth/getorganizerevent";
+    static final String getCategories = "$baseUrl$prefix$auth/getallcategory";
+        static final String getallevent = "$baseUrl$prefix$auth/getallevent";
+
 
 }

@@ -2,7 +2,7 @@ import 'package:event/core/controllers/dashscreen/profile/profile_controller.dar
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
-import 'package:event/features/screens/recent_orders/presentation/recent_order_screen.dart';
+import 'package:event/features/screens/my_events/presentation/my_events_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -87,6 +87,12 @@ class ProfileScreen extends StatelessWidget {
                       c.coreController.currentUser.value?.email ?? "",
                       style: CustomTextStyles.f16W700(),
                     ),
+                    Text(
+                      c.coreController.currentUser.value?.status == "1"
+                          ? "Organizer"
+                          : "User",
+                      style: CustomTextStyles.f16W700(),
+                    ),
                   ],
                 ),
               ],
@@ -104,13 +110,24 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                ProfileTiles(
-                  onTap: () {
-                    Get.toNamed(RecentOrdersScreen.routeName);
-                  },
-                  iconUrl: IconPath.recentOrder,
-                  title: "Recent Orders",
-                ),
+                // ProfileTiles(
+                //   onTap: () {
+                //     Get.toNamed(RecentOrdersScreen.routeName);
+                //   },
+                //   iconUrl: IconPath.recentOrder,
+                //   title: "Recent Orders",
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                if (c.coreController.currentUser.value?.status == "1")
+                  ProfileTiles(
+                    onTap: () {
+                      Get.toNamed(MyEventsScreen.routeName);
+                    },
+                    iconUrl: IconPath.recentOrder,
+                    title: "My Events",
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -131,8 +148,9 @@ class ProfileScreen extends StatelessWidget {
                           context: context,
                           builder: (BuildContext ctx) {
                             return CustomAlertDialog(
-                              // title: "Logout Confirmation",
-                              message: "You want to become an organizer ?",
+                              title: "You want to become an organizer ?",
+                              message:
+                                  "You will be logged out for this action.",
                               onConfirm: () {
                                 c.becomeBoss();
                               },

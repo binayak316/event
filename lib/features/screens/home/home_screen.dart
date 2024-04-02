@@ -1,8 +1,11 @@
+import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/colors.dart';
+import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:event/core/widgets/common/text_form_field.dart';
+import 'package:event/core/widgets/shimmer/category_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -48,61 +51,118 @@ class HomeScreen extends StatelessWidget {
               textInputType: TextInputType.name,
             ),
 
-            // const SizedBox(
-            //   height: 10,
-            // ),
+            const SizedBox(
+              height: 10,
+            ),
 
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                EventCategory(
-                  category: "Music",
-                ),
-                EventCategory(
-                  category: "Music",
-                ),
-                EventCategory(
-                  category: "Music",
-                ),
-              ],
+            Align(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                height: 100,
+                child: Obx(() {
+                  if (c.pageState.value == PageState.LOADING) {
+                    return Center(
+                      child: LinearProgressIndicator(),
+                    );
+                  } else if (c.pageState.value == PageState.EMPTY) {
+                    return Center(
+                      child: Text("Empty"),
+                    );
+                  } else if (c.pageState.value == PageState.NORMAL) {
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var category = c.categoryList[index];
+                          return EventCategory(category: category.title ?? "");
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            width: 10,
+                          );
+                        },
+                        itemCount: c.categoryList.length);
+                  } else {
+                    return Center(
+                      child: Text("Error View"),
+                    );
+                  }
+                }),
+              ),
             ),
 
             Text(
               "Popular Events",
               style: CustomTextStyles.f20W600(color: AppColors.primary),
             ),
+            // Expanded(
+            //   child: SizedBox(
+            //     child: GridView.builder(
+            //       shrinkWrap: true,
+            //       // physics: AlwaysScrollableScrollPhysics(),
+            //       // physics: const NeverScrollableScrollPhysics(),
+            //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //           crossAxisCount: 2, // number of items in each row
+            //           mainAxisSpacing: 20, // spacing between rows
+            //           crossAxisSpacing: 20,
+            //           childAspectRatio: 0.9 // spacing between columns
+            //           ),
+            //       // padding: const EdgeInsets.all(
+            //       //     8.0), // padding around the grid
+            //       itemCount: 20,
+            //       itemBuilder: (context, index) {
+            //         return InkWell(
+            //           onTap: () {
+            //             // Get.toNamed(Routes.map_screen);
+            //           },
+            //           child: EventCard(
+            //             icon: IconPath.apple,
+            //             title: "New Year Eve",
+            //             location: "Pokhra-6-leknath",
+            //             price: "Rs. 1000",
+            //             onTap: () {},
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
+
+            // [[[[[[[[[[[[[[]]]]]]]]]]]]]]
             Expanded(
-              child: SizedBox(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  // physics: AlwaysScrollableScrollPhysics(),
-                  // physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // number of items in each row
-                      mainAxisSpacing: 20, // spacing between rows
-                      crossAxisSpacing: 20,
-                      childAspectRatio: 0.9 // spacing between columns
-                      ),
-                  // padding: const EdgeInsets.all(
-                  //     8.0), // padding around the grid
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        // Get.toNamed(Routes.map_screen);
+              child: Obx(() {
+                if (c.pageState.value == PageState.LOADING) {
+                  return CategoryShimmer.categoryGrid();
+                } else if (c.pageState.value == PageState.EMPTY) {
+                  return const Center(
+                    child: Text("Empty"),
+                  );
+                } else if (c.pageState.value == PageState.NORMAL) {
+                  return SizedBox(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, // number of items in each row
+                              mainAxisSpacing: 20, // spacing between rows
+                              crossAxisSpacing: 20,
+                              childAspectRatio: 0.9 // spacing between columns
+                              ),
+                      itemCount: c.eventList.length,
+                      itemBuilder: (context, index) {
+                        var product = c.eventList[index];
+                        return EventCard(
+                          event: product,
+                        );
                       },
-                      child: EventCard(
-                        icon: IconPath.apple,
-                        title: "New Year Eve",
-                        location: "Pokhra-6-leknath",
-                        price: "Rs. 1000",
-                        onTap: () {},
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: Text("Error View"),
+                  );
+                }
+              }),
+            )
           ],
         ),
       ),
@@ -145,25 +205,26 @@ class EventCategory extends StatelessWidget {
 }
 
 class EventCard extends StatelessWidget {
-  final String? icon;
-  final String? title;
-  final VoidCallback? onTap;
-  final String? location;
-  final String? price;
-
+  // final String? icon;
+  // final String? title;
+  // final VoidCallback? onTap;
+  // final String? location;
+  // final String? price;
+  final EventModel event;
   EventCard({
     super.key,
-    required this.icon,
-    required this.title,
-    this.onTap,
-    this.location,
-    required this.price,
+    // required this.icon,
+    // required this.title,
+    // this.onTap,
+    // this.location,
+    // required this.price,
+    required this.event,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {},
       child: Container(
         padding: const EdgeInsets.only(left: 6, right: 6, top: 4, bottom: 6),
         decoration: BoxDecoration(
@@ -209,7 +270,7 @@ class EventCard extends StatelessWidget {
                   // imageUrl: "${Api.imageUrl}${cafeItem.imageModel?.fileName}",
                   height: 80,
                   // width: 80,
-                  boxFit: BoxFit.cover,
+                  boxFit: BoxFit.fitWidth,
                   // alignment: Alignment.center,
                 ),
               ),
@@ -221,7 +282,7 @@ class EventCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title ?? "",
+                      event.eventTitle ?? "",
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontSize: 14,
                             color: AppColors.primary,
@@ -232,7 +293,7 @@ class EventCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      location ?? "",
+                      event.eventDate ?? "",
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontSize: 14,
                             color: AppColors.blackColor,
@@ -245,18 +306,14 @@ class EventCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FittedBox(
-                          child: Text(
-                            price ?? "",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(
-                                  fontSize: 14,
-                                  color: AppColors.blackColor,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
+                        Text(
+                          event.eventTime ?? "",
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontSize: 14,
+                                    color: AppColors.blackColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         const SizedBox(
                           width: 4,

@@ -70,7 +70,8 @@ class ProfileController extends GetxController {
           coreController.loadCurrentUser();
 
           loading.hide();
-          Get.back();
+          // Get.back();
+          Get.find<CoreController>().logOut();
           // Get.offAllNamed(DashPageManager.routeName);
           GearSnackBar.success(
               title: "Organizer", message: "You are promoted to organizer.");

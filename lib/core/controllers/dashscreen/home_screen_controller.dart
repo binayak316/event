@@ -5,6 +5,7 @@
 // import 'package:chalchitra2/core/utils/helpers/log_helper.dart';
 // import 'package:get/get.dart';
 
+import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/constants/enums.dart';
@@ -12,37 +13,57 @@ import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:get/get.dart';
 
 class HomeScreenController extends GetxController {
-//   RxList<EventModel> eventList = RxList();
-// //   RxList<MovieDate> dates = RxList();
+  RxList<CategoryModel> categoryList = RxList();
+  RxList<EventModel> eventList = RxList();
 
-//   Rx<PageState> pageState = PageState.LOADING.obs;
+  Rx<PageState> pageState = PageState.LOADING.obs;
 
-//   @override
-//   void onInit() {
-//     getAllEvents();
-//     super.onInit();
-//   }
+  @override
+  void onInit() {
+    getAllCategories();
+    getAllEvents();
+
+    super.onInit();
+  }
 
 // //   RxInt tappedIndex = RxInt(0);
 
 // //   RxString movieDateStore = RxString("");
 
-//   void getAllEvents() async {
-//     eventList.clear();
-//     EventRepo.getAllEvents(
-//       onSuccess: (events) {
-//         if (events.isEmpty) {
-//           pageState.value = PageState.EMPTY;
-//         } else {
-//           eventList.addAll(events);
-//           pageState.value = PageState.NORMAL;
-//         }
-//       },
-//       onError: (message) {
-//         pageState.value = PageState.ERROR;
-//         LogHelper.error(message);
-//       },
-//     );
-//   }
+  void getAllCategories() async {
+    categoryList.clear();
+    EventRepo.getCategories(
+      onSuccess: (categories) {
+        if (categories.isEmpty) {
+          pageState.value = PageState.EMPTY;
+        } else {
+          categoryList.addAll(categories);
+          pageState.value = PageState.NORMAL;
+        }
+      },
+      onError: (message) {
+        pageState.value = PageState.ERROR;
+        LogHelper.error(message);
+      },
+    );
+  }
 
+
+  void getAllEvents() async {
+    eventList.clear();
+    EventRepo.getAllEvents(
+      onSuccess: (events) {
+        if (events.isEmpty) {
+          pageState.value = PageState.EMPTY;
+        } else {
+          eventList.addAll(events);
+          pageState.value = PageState.NORMAL;
+        }
+      },
+      onError: (message) {
+        pageState.value = PageState.ERROR;
+        LogHelper.error(message);
+      },
+    );
+  }
 }
