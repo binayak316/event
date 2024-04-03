@@ -10,7 +10,7 @@ class AddEventRequestParams {
   String? totalPublicSeats;
   String? vipSeatsPrice;
   String? publicSeatsPrice;
-  String? evetType;
+  String? category;
 
   AddEventRequestParams(
       {this.eventTitle,
@@ -23,7 +23,7 @@ class AddEventRequestParams {
       this.totalVipSeats,
       this.totalPublicSeats,
       this.vipSeatsPrice,
-      this.evetType,
+      this.category,
       this.publicSeatsPrice});
 
   Map<String, dynamic> toJson() {
@@ -39,7 +39,7 @@ class AddEventRequestParams {
     data['total_public_seats'] = this.totalPublicSeats;
     data['vip_seats_price'] = this.vipSeatsPrice;
     data['public_seats_price'] = this.publicSeatsPrice;
-    data['event_type'] = this.evetType;
+    data['category'] = this.category;
 
     return data;
   }

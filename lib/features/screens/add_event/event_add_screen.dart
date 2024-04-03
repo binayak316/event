@@ -198,6 +198,14 @@ class EventAddScreen extends StatelessWidget {
                   ),
                   PrimaryTextField(
                     hint: "Select Venue",
+                    readOnly: true,
+                    suffixIcon: const Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                      color: Colors.grey,
+                    ),
+                    onTap: () {
+                      c.showVenueLocation();
+                    },
                     textInputAction: TextInputAction.next,
                     textInputType: TextInputType.emailAddress,
                     validator: Validators.checknameEmpty,

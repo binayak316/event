@@ -75,6 +75,12 @@ class MyEventRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          border: Border.all(),
+          borderRadius: BorderRadius.circular(
+            12,
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -101,26 +107,77 @@ class MyEventRowWidget extends StatelessWidget {
                     style:
                         CustomTextStyles.f16W500(color: AppColors.blackColor),
                   ),
-                  Text(
-                    event.eventDate ?? "",
-                    style:
-                        CustomTextStyles.f14W400(color: AppColors.blackColor),
-                  ),
-                  Text(
-                    event.eventTime ?? "",
-                    style:
-                        CustomTextStyles.f14W400(color: AppColors.blackColor),
-                  ),
-                  Text(
-                    event.location ?? "",
-                    style:
-                        CustomTextStyles.f16W500(color: AppColors.blackColor),
-                  ),
+                  // Text(
+                  //   event.eventDate ?? "",
+                  //   style:
+                  //       CustomTextStyles.f14W400(color: AppColors.blackColor),
+                  // ),
+                  if (event.eventDate != null)
+                    RichText(
+                      text: TextSpan(
+                          text: 'Date: ',
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: event.eventDate != null
+                                  ? '${event.eventDate} /VIP Rs. ${event.vipSeatsPrice}'
+                                  : '${event.eventDate} | N/A}',
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ]),
+                    ),
+                  if (event.eventTime != null)
+                    RichText(
+                      text: TextSpan(
+                          text: 'Time: ',
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: event.eventTime != null
+                                  ? '${event.eventTime} '
+                                  : '',
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ]),
+                    ),
+                  if (event.eventTime != null)
+                    RichText(
+                      text: TextSpan(
+                          text: 'Location: ',
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: event.location != null
+                                  ? '${event.location} '
+                                  : '',
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ]),
+                    ),
                 ],
               ),
             ],
           ),
-          Icon(
+          
+          const Icon(
             Icons.more_vert,
             color: AppColors.blackColor,
           )

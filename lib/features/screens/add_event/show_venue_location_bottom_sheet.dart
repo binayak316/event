@@ -1,15 +1,16 @@
-import 'package:event/core/controllers/dashscreen/home_screen_controller.dart';
+
+import 'package:event/core/controllers/dashscreen/event/event_add_controller.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class VenueTypeBottomSheet extends StatelessWidget {
-  final Function(String venueType) onSelectVenueType;
-  final homeController = Get.find<HomeScreenController>();
-  VenueTypeBottomSheet({
+class VenueLocationBottomSheet extends StatelessWidget {
+  final Function(String venueType) onSelectVenue;
+  final eventaddController = Get.find<EventAddController>();
+  VenueLocationBottomSheet({
     super.key,
-    required this.onSelectVenueType,
+    required this.onSelectVenue,
   });
 
   @override
@@ -20,7 +21,7 @@ class VenueTypeBottomSheet extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Select Venue Type",
+            "Select Venue location",
             style: CustomTextStyles.f16W600(color: AppColors.blackColor),
           ),
           const Divider(
@@ -57,20 +58,20 @@ class VenueTypeBottomSheet extends StatelessWidget {
           //     );
           //   },
           // ),
-          if (homeController.categoryList.isNotEmpty)
+          if (eventaddController.venueList.isNotEmpty)
             ListView.builder(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
-              itemCount: homeController.categoryList.length,
+              itemCount: eventaddController.venueList.length,
               itemBuilder: (context, index) {
-                var category = homeController.categoryList[index];
+                var venue = eventaddController.venueList[index];
                 return ListTile(
                   onTap: () {
                     Navigator.of(context).pop();
-                    onSelectVenueType(category.title ?? "");
+                    onSelectVenue(venue.title ?? "");
                   },
                   title: Text(
-                    category.title ?? "",
+                    venue.title ?? "",
                     style: CustomTextStyles.f16W400(),
                   ),
                   dense: true,

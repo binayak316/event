@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:event/core/model/event/add_event_request_model.dart';
+import 'package:event/core/model/location_model.dart';
 import 'package:event/core/repo/event/event_repo.dart';
+import 'package:event/core/utils/constants/enums.dart';
+import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:event/core/utils/helpers/xosial_date_piceker.dart';
 import 'package:event/core/widgets/custom/app_progress_dialog.dart';
 import 'package:event/core/widgets/custom/app_snackbar.dart';
@@ -9,6 +12,8 @@ import 'package:event/features/screens/add_event/show_venue_type_bottom_sheet.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../features/screens/add_event/show_venue_location_bottom_sheet.dart';
 
 class EventAddController extends GetxController {
   GlobalKey<FormState> eventKey = GlobalKey<FormState>();
@@ -34,6 +39,15 @@ class EventAddController extends GetxController {
   final totalPublicseatsController = TextEditingController();
 
   final eventDescriptionController = TextEditingController();
+
+  RxList<LocationModel> venueList = RxList();
+  @override
+  void onInit() {
+    getAllVenues();
+    // TODO: implement onInit
+    super.onInit();
+  }
+
   RxBool isDobHasData = RxBool(false);
   TimeOfDay time = TimeOfDay.now();
 
@@ -62,6 +76,25 @@ class EventAddController extends GetxController {
           child: VenueTypeBottomSheet(
             onSelectVenueType: (venueType) {
               eventTypeController.text = venueType;
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  showVenueLocation() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: VenueLocationBottomSheet(
+            onSelectVenue: (venueType) {
+              eventVenueController.text = venueType;
             },
           ),
         );
@@ -101,7 +134,7 @@ class EventAddController extends GetxController {
         eventTitle: eventNameController.text,
         eventDate: eventDateController.text,
         eventTime: eventTimeController.text,
-        // evetType: eventTypeController.text,
+        category: eventTypeController.text,
         thumbnail: pickedFile.toString(),
         location: eventVenueController.text,
         vipSeatsPrice: eventVipPriceController.text,
@@ -128,5 +161,25 @@ class EventAddController extends GetxController {
             GearSnackBar.error(title: "Login Failed", message: message);
           });
     }
+  }
+
+  Rx<PageState> pageState = PageState.LOADING.obs;
+
+  void getAllVenues() async {
+    venueList.clear();
+    EventRepo.getLocations(
+      onSuccess: (venues) {
+        if (venues.isEmpty) {
+          pageState.value = PageState.EMPTY;
+        } else {
+          venueList.addAll(venues);
+          pageState.value = PageState.NORMAL;
+        }
+      },
+      onError: (message) {
+        pageState.value = PageState.ERROR;
+        LogHelper.error(message);
+      },
+    );
   }
 }

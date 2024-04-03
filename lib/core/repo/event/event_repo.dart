@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/add_event_request_model.dart';
 import 'package:event/core/model/event/event_model.dart';
+import 'package:event/core/model/location_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/messages.dart';
 import 'package:event/core/utils/helpers/app_requests.dart';
@@ -193,6 +194,32 @@ class EventRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.myEvents, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getLocations({
+    required Function(List<LocationModel> venues) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getallvenue;
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        var venues = locationsFromJson(data['data']);
+        onSuccess(venues);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getallvenue, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }
