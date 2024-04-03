@@ -4,11 +4,7 @@
 // import 'package:chalchitra2/features/screens/splash_screen.dart';
 // import 'package:get/get.dart';
 
-import 'package:event/core/controllers/dashscreen/dash_page_manager_controller.dart';
-import 'package:event/core/controllers/dashscreen/event/event_controller.dart';
-import 'package:event/core/controllers/dashscreen/home_screen_controller.dart';
 import 'package:event/core/utils/config/dash_pages.dart';
-import 'package:event/features/screens/dashscreen/dashboard_panel.dart';
 import 'package:get/get.dart';
 
 import '../../../features/screens/splash/splash_screen.dart';

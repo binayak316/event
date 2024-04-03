@@ -2,6 +2,7 @@ import 'package:event/core/controllers/dashscreen/profile/profile_controller.dar
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
+import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/my_events/presentation/my_events_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -67,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: const SkyNetworkImage(
-                    imageUrl: "https://picsum.photos/200/300",
+                    imageUrl: "",
                     width: 60,
                     height: 60,
                     boxFit: BoxFit.fill,
@@ -135,6 +136,16 @@ class ProfileScreen extends StatelessWidget {
                   onTap: () {},
                   iconUrl: IconPath.history,
                   title: "History",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ProfileTiles(
+                  onTap: () {
+                    Get.toNamed(MyBookedEventsScreen.routeName);
+                  },
+                  iconUrl: IconPath.plus,
+                  title: "Booked Events",
                 ),
                 const SizedBox(
                   height: 10,

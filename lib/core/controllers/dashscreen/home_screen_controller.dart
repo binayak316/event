@@ -5,6 +5,7 @@
 // import 'package:chalchitra2/core/utils/helpers/log_helper.dart';
 // import 'package:get/get.dart';
 
+import 'package:event/core/controllers/core_controller.dart';
 import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/repo/event/event_repo.dart';
@@ -13,6 +14,7 @@ import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:get/get.dart';
 
 class HomeScreenController extends GetxController {
+  final coreController = Get.find<CoreController>();
   RxList<CategoryModel> categoryList = RxList();
   RxList<EventModel> eventList = RxList();
 
@@ -47,7 +49,6 @@ class HomeScreenController extends GetxController {
       },
     );
   }
-
 
   void getAllEvents() async {
     eventList.clear();

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/add_event_request_model.dart';
@@ -9,6 +10,7 @@ import 'package:event/core/utils/constants/messages.dart';
 import 'package:event/core/utils/helpers/app_requests.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class EventRepo {
   static Future<void> getCategories({
@@ -68,18 +70,38 @@ class EventRepo {
   }
 
   static Future<void> addEvent({
-    required AddEventRequestParams addEventParams,
+    required AddEventRequestParams? addEventParams,
+    required File? file,
     required Function(String message) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
       String url = Api.storeEvent;
+      List<http.MultipartFile> images = [];
+      if (file != null) {
+        images = [
+          http.MultipartFile.fromBytes(
+            "thumbnail",
+            await file.readAsBytes(),
+            filename: "image",
+            contentType: MediaType("image", "*"),
+          )
+        ];
+      }
 
-      var body = addEventParams.toJson();
+      http.StreamedResponse response = await AppRequest.multiPart(
+        url: url,
+        files: images,
+        // fields: json.encode(menuRequestParams?.toJson()),
+        fields: addEventParams?.toJson(),
+        // fields: encodedParams,
+      );
 
-      http.Response response = await AppRequest.post(url, body: body);
+      print("----------------${response}");
 
-      dynamic data = json.decode(response.body);
+      dynamic data = json.decode(await response.stream.bytesToString());
+
+      print("--------------response-------------$data");
 
       if (data['status']) {
         var msg = data['message'];
@@ -220,6 +242,94 @@ class EventRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.getallvenue, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> bookEvent({
+    required String eventId,
+    required String quantity,
+    required String ticketType,
+    required String price,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.bookEvent;
+
+      var body = {
+        "event_id": eventId,
+        "qty": quantity,
+        "ticket_type": ticketType,
+        "total_price": price,
+      };
+
+      http.Response response = await AppRequest.post(url, body: body);
+
+      dynamic data = json.decode(response.body);
+
+      print('--------------------$data');
+
+      if (data['status']) {
+        var msg = data['message'];
+        onSuccess(msg);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.bookEvent, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> searchEvents({
+    required Function(List<EventModel> events) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.searchEvents;
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        var events = eventsFromJson(data['data']);
+        onSuccess(events);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.searchEvents, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> bookedEvents({
+    required Function(List<EventModel> events) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.bookedEvents;
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        var events = eventsFromJson(data['data']);
+        onSuccess(events);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.bookedEvents, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

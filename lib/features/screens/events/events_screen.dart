@@ -1,5 +1,6 @@
 import 'package:event/core/controllers/dashscreen/event/event_controller.dart';
 import 'package:event/core/model/event/event_model.dart';
+import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
@@ -67,13 +68,10 @@ class EventsScreen extends StatelessWidget {
 }
 
 class EventTileCard extends StatelessWidget {
- 
+  final c = Get.find<EventsController>();
   final EventModel eventModel;
 
-  EventTileCard(
-      {super.key,
-     
-      required this.eventModel});
+  EventTileCard({super.key, required this.eventModel});
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +119,8 @@ class EventTileCard extends StatelessWidget {
                 //   alignment: Alignment.center,
                 // ),
                 SkyNetworkImage(
-                  imageUrl: "",
-                  // imageUrl: "${Api.imageUrl}${cafeItem.imageModel?.fileName}",
+                  // imageUrl: "",
+                  imageUrl: "${Api.imageUrl}${eventModel.thumbnail}",
                   height: 80,
                   // width: 80,
                   boxFit: BoxFit.cover,
@@ -278,19 +276,21 @@ class EventTileCard extends StatelessWidget {
                 const SizedBox(
                   width: 4,
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(10),
+                if (eventModel.organizerId !=
+                    c.coreController.currentUser.value?.id)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      "Get Details to Book",
+                      style:
+                          CustomTextStyles.f14W300(color: AppColors.whiteColor),
+                    ),
                   ),
-                  child: Text(
-                    "Book Now",
-                    style:
-                        CustomTextStyles.f14W300(color: AppColors.whiteColor),
-                  ),
-                ),
               ],
             )
           ],

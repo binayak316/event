@@ -1,8 +1,12 @@
 import 'package:event/core/controllers/dashscreen/event/event_add_controller.dart';
 import 'package:event/core/controllers/dashscreen/event/event_controller.dart';
 import 'package:event/core/controllers/dashscreen/event/event_detail_controller.dart';
+import 'package:event/core/controllers/dashscreen/my_booked_events/my_booked_events_controller.dart';
 import 'package:event/core/controllers/dashscreen/profile/profile_controller.dart';
+import 'package:event/core/controllers/dashscreen/search_event/search_event_controller.dart';
+import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
+import 'package:event/features/screens/home/search_event_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../features/screens/dashscreen/dashboard_panel.dart';
@@ -52,6 +56,26 @@ final List<GetPage> dashScreenPages = <GetPage>[
     binding: BindingsBuilder(
       () {
         Get.lazyPut(() => myEventController());
+      },
+    ),
+  ),
+
+  GetPage(
+    name: MyBookedEventsScreen.routeName,
+    page: () => MyBookedEventsScreen(),
+    binding: BindingsBuilder(
+      () {
+        Get.lazyPut(() => MyBookedEventController());
+      },
+    ),
+  ),
+
+  GetPage(
+    name: SearchEventScreen.routeName,
+    page: () => SearchEventScreen(),
+    binding: BindingsBuilder(
+      () {
+        Get.lazyPut(() => SearchEventController());
       },
     ),
   ),

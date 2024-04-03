@@ -10,10 +10,14 @@ class IconPath {
   static const String information = "$basePath/information.svg";
   static const String logo = "$basePath/logo.svg";
   static const String upcoming = "$basePath/upcoming.svg";
+  static const String searching = "$basePath/searching.svg";
+
   static const String user = "$basePath/user.svg";
   static const String unauthenticated = "$basePath/unauthenticated.svg";
   static const String unAuth = "$basePath/unAuth.svg";
-    static const String organizer = "$basePath/organizer.svg";
+  static const String organizer = "$basePath/organizer.svg";
+  static const String minus = "$basePath/minus.svg";
+  static const String plus = "$basePath/plus.svg";
 
   static const String logout = "$basePath/logout.svg";
   static const String map = "$basePath/map.svg";

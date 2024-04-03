@@ -3,9 +3,10 @@ import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 class myEventController extends GetxController {
-   RxList<EventModel> eventList = RxList();
+  RxList<EventModel> eventList = RxList();
   Rx<PageState> pageState = PageState.LOADING.obs;
 
   @override
@@ -20,6 +21,14 @@ class myEventController extends GetxController {
     super.onInit();
   }
 
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  void onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 200));
+    getMyEvents();
+    refreshController.refreshCompleted();
+  }
 
   void getMyEvents() async {
     eventList.clear();

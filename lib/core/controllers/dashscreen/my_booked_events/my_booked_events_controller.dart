@@ -1,18 +1,17 @@
-import 'package:event/core/controllers/core_controller.dart';
 import 'package:event/core/model/event/event_model.dart';
-import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:get/get.dart';
 
-class EventsController extends GetxController {
-  final coreController = Get.find<CoreController>();
-  RxList<EventModel> eventList = RxList();
+import '../../../repo/event/event_repo.dart';
+
+class MyBookedEventController extends GetxController {
+  RxList<EventModel> bookedEventList = RxList();
   Rx<PageState> pageState = PageState.LOADING.obs;
 
   @override
   void onInit() {
-    getAllEvents();
+    getMyEvents();
 
     // var args = Get.arguments;
     // if (args != null) {
@@ -22,18 +21,23 @@ class EventsController extends GetxController {
     super.onInit();
   }
 
-//   RxInt tappedIndex = RxInt(0);
+  // RefreshController refreshController =
+  //     RefreshController(initialRefresh: false);
 
-//   RxString movieDateStore = RxString("");
+  // void onRefresh() async {
+  //   await Future.delayed(Duration(milliseconds: 200));
+  //   getMyEvents();
+  //   refreshController.refreshCompleted();
+  // }
 
-  void getAllEvents() async {
-    eventList.clear();
-    EventRepo.getAllEvents(
+  void getMyEvents() async {
+    bookedEventList.clear();
+    EventRepo.bookedEvents(
       onSuccess: (events) {
         if (events.isEmpty) {
           pageState.value = PageState.EMPTY;
         } else {
-          eventList.addAll(events);
+          bookedEventList.addAll(events);
           pageState.value = PageState.NORMAL;
         }
       },
@@ -43,6 +47,4 @@ class EventsController extends GetxController {
       },
     );
   }
-
-
 }

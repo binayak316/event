@@ -135,7 +135,7 @@ class EventAddController extends GetxController {
         eventDate: eventDateController.text,
         eventTime: eventTimeController.text,
         category: eventTypeController.text,
-        thumbnail: pickedFile.toString(),
+        // thumbnail: pickedFile.toString(),
         location: eventVenueController.text,
         vipSeatsPrice: eventVipPriceController.text,
         totalSeats: totalSeatsController.text,
@@ -146,6 +146,7 @@ class EventAddController extends GetxController {
       );
       await EventRepo.addEvent(
           addEventParams: addEventRequestParams,
+          file: pickedFile.value,
           onSuccess: (message) {
             loading.hide();
             // Get.offAllNamed(DashPageManager.routeName);

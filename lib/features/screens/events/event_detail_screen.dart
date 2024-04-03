@@ -1,4 +1,5 @@
 import 'package:event/core/controllers/dashscreen/event/event_detail_controller.dart';
+import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/widgets/common/button.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
@@ -35,11 +36,11 @@ class EventDetailScreen extends StatelessWidget {
             children: [
               // ),
               SkyNetworkImage(
-                imageUrl: "",
-                // imageUrl: "${Api.imageUrl}${cafeItem.imageModel?.fileName}",
+                // imageUrl: "",
+                imageUrl: "${Api.imageUrl}${c.event.value?.thumbnail}",
                 // height: 80,
                 width: Get.width,
-                // width: 80,
+                height: 350,
                 boxFit: BoxFit.cover,
                 // alignment: Alignment.center,
               ),
@@ -188,13 +189,18 @@ class EventDetailScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: PrimaryElevatedButton(
-          onPressed: () {},
-          title: "Book Now",
-        ),
-      ),
+      bottomNavigationBar:
+          c.event.value?.organizerId != c.coreController.currentUser.value?.id
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PrimaryElevatedButton(
+                    onPressed: () {
+                      c.openBookingBootomSheet();
+                    },
+                    title: "Book Now",
+                  ),
+                )
+              : const SizedBox.shrink(),
     );
   }
 }

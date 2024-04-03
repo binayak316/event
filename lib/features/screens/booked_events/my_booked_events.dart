@@ -1,18 +1,17 @@
+import 'package:event/core/controllers/dashscreen/my_booked_events/my_booked_events_controller.dart';
 import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
-import 'package:event/features/screens/my_events/controller/my_event_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-class MyEventsScreen extends StatelessWidget {
-  static const String routeName = "/my-events";
-  final c = Get.find<myEventController>();
-  MyEventsScreen({super.key});
+class MyBookedEventsScreen extends StatelessWidget {
+  static const String routeName = "/my-booked-events";
+  final c = Get.find<MyBookedEventController>();
+  MyBookedEventsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,53 +23,44 @@ class MyEventsScreen extends StatelessWidget {
           style: CustomTextStyles.f16W600(),
         ),
       ),
-      body: SmartRefresher(
-        enablePullDown: true,
-        // enablePullUp: true,
-        // header: ClassicHeader(),
-        header: const WaterDropHeader(),
-
-        controller: c.refreshController,
-        onRefresh: () => c.onRefresh(),
-        child: SingleChildScrollView(
-          // physics: const ClampingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Obx(() {
-                  if (c.pageState.value == PageState.LOADING) {
-                    return Center(
-                      child: LinearProgressIndicator(),
-                    );
-                  } else if (c.pageState.value == PageState.EMPTY) {
-                    return Center(
-                      child: Text("Empty"),
-                    );
-                  } else if (c.pageState.value == PageState.NORMAL) {
-                    return ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          var event = c.eventList[index];
-                          return MyEventRowWidget(
-                            event: event,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: 10,
-                          );
-                        },
-                        itemCount: c.eventList.length);
-                  } else {
-                    return Center(
-                      child: Text("Error View"),
-                    );
-                  }
-                })
-              ],
-            ),
+      body: SingleChildScrollView(
+        // physics: const ClampingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Obx(() {
+                if (c.pageState.value == PageState.LOADING) {
+                  return Center(
+                    child: LinearProgressIndicator(),
+                  );
+                } else if (c.pageState.value == PageState.EMPTY) {
+                  return Center(
+                    child: Text("Empty"),
+                  );
+                } else if (c.pageState.value == PageState.NORMAL) {
+                  return ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        var event = c.bookedEventList[index];
+                        return MyBookedEventRowWidget(
+                          event: event,
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          height: 10,
+                        );
+                      },
+                      itemCount: c.bookedEventList.length);
+                } else {
+                  return Center(
+                    child: Text("Error View"),
+                  );
+                }
+              })
+            ],
           ),
         ),
       ),
@@ -78,9 +68,9 @@ class MyEventsScreen extends StatelessWidget {
   }
 }
 
-class MyEventRowWidget extends StatelessWidget {
+class MyBookedEventRowWidget extends StatelessWidget {
   final EventModel event;
-  const MyEventRowWidget({
+  const MyBookedEventRowWidget({
     super.key,
     required this.event,
   });
@@ -101,7 +91,7 @@ class MyEventRowWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(20),
                 child: SkyNetworkImage(
                   imageUrl: "${Api.imageUrl}${event.thumbnail}",
 
@@ -191,10 +181,6 @@ class MyEventRowWidget extends StatelessWidget {
               ),
             ],
           ),
-          const Icon(
-            Icons.more_vert,
-            color: AppColors.blackColor,
-          )
         ],
       ),
     );
