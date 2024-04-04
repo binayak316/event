@@ -12,6 +12,8 @@ import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
+import '../../model/event/event_booking_request_params.dart';
+
 class EventRepo {
   static Future<void> getCategories({
     required Function(List<CategoryModel> events) onSuccess,
@@ -247,22 +249,24 @@ class EventRepo {
   }
 
   static Future<void> bookEvent({
-    required String eventId,
-    required String quantity,
-    required String ticketType,
-    required String price,
+    // required String eventId,
+    // required String quantity,
+    // required String ticketType,
+    // required String price,
+    required EventBookingRequestParams? eventBookingRequestParams,
     required Function(String message) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
       String url = Api.bookEvent;
 
-      var body = {
-        "event_id": eventId,
-        "qty": quantity,
-        "ticket_type": ticketType,
-        "total_price": price,
-      };
+      // var body = {
+      //   "event_id": eventId,
+      //   "qty": quantity,
+      //   "ticket_type": ticketType,
+      //   "total_price": price,
+      // };
+      var body = eventBookingRequestParams?.toJson();
 
       http.Response response = await AppRequest.post(url, body: body);
 

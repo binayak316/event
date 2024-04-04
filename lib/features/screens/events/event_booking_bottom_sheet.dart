@@ -1,10 +1,13 @@
 import 'package:event/core/controllers/dashscreen/event/event_detail_controller.dart';
+import 'package:event/core/model/event/event_booking_request_params.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/widgets/common/button.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/custom/app_radio_button.dart';
+import 'package:event/core/widgets/custom/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 
 class BookingEventBottomSheet extends StatelessWidget {
   final c = Get.find<EventDetailController>();
@@ -191,7 +194,50 @@ class BookingEventBottomSheet extends StatelessWidget {
                     child: PrimaryElevatedButton(
                       // width: 20,
                       onPressed: () {
-                        c.bookEvent();
+                        // c.bookEvent();
+
+                        KhaltiScope.of(context).pay(
+                            config: PaymentConfig(
+                              amount: c.price.value.toInt(),
+                              productIdentity: 'event-booking-cost',
+                              productName: 'event-ticket-price',
+                            ),
+                            preferences: [
+                              PaymentPreference.khalti,
+                              // PaymentPreference.connectIPS,
+                            ],
+                            onSuccess: (PaymentSuccessModel su) {
+                              c.eventBookingRequestParamsModel =
+                                  EventBookingRequestParams(
+                                // movieShowId: int.parse(
+                                //   (c.movieShow.value?.id)
+                                //       .toString(),
+                                // ),
+                                // refrenceId: su.idx,
+                                // totalTicketPrice: total,
+                                // selectedSeats: c.bookedSeatList,
+
+                                eventId: c.event.value!.id!.toString(),
+                                qty: c.itemQuantity.value.toString(),
+                                ticketType: c.selectedTicketType.value,
+                                totalPrice: c.price.value.toString(),
+                                refrenceId: su.idx,
+                              );
+                              c.bookEvent(c.eventBookingRequestParamsModel);
+                              Get.back();
+                              GearSnackBar.success(
+                                  title: "Payment",
+                                  message: "Payment Successful");
+                            },
+                            onFailure: (fa) {
+                              Get.back();
+                              GearSnackBar.error(
+                                  title: "Failed", message: "Error Failed");
+                            },
+                            onCancel: () {
+                              Get.back();
+                              ("Payment cancelled!!",);
+                            });
                       },
                       title: "Book Now",
                       color: AppColors.primary,

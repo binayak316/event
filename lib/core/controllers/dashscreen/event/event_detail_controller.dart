@@ -1,10 +1,12 @@
 import 'package:event/core/controllers/core_controller.dart';
+import 'package:event/core/model/event/event_booking_request_params.dart';
 import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:event/core/widgets/custom/app_progress_dialog.dart';
 import 'package:event/core/widgets/custom/app_snackbar.dart';
 import 'package:event/features/screens/events/event_booking_bottom_sheet.dart';
+import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -96,17 +98,15 @@ class EventDetailController extends GetxController {
   }
 
   ProgressDialog loading = ProgressDialog();
-
-  Future<void> bookEvent() async {
+  EventBookingRequestParams? eventBookingRequestParamsModel;
+  Future<void> bookEvent(
+      EventBookingRequestParams? eventBookingRequestParams) async {
     loading.show();
     await EventRepo.bookEvent(
-        eventId: event.value!.id!.toString(),
-        quantity: itemQuantity.value.toString(),
-        ticketType: selectedTicketType.value,
-        price: price.value.toString(),
+        eventBookingRequestParams: eventBookingRequestParams,
         onSuccess: (message) {
           loading.hide();
-          Get.back();
+          Get.offNamed(EventDetailScreen.routeName);
           GearSnackBar.success(title: "Organizer", message: message);
         },
         onError: (message) {
