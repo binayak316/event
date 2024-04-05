@@ -6,6 +6,7 @@ import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/empty_view.dart';
+import 'package:event/core/widgets/common/error_view.dart';
 import 'package:event/core/widgets/common/text_form_field.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class SearchEventScreen extends StatelessWidget {
         title: PrimaryTextField(
           autofocus: true,
           hint: "Search Event",
+          controller: c.searchController,
           onValueChange: (value) {
             c.onTextChange(value);
           },
@@ -78,8 +80,11 @@ class SearchEventScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return Center(
-                    child: Text("Error View"),
+                  return ErrorView(
+                    message: "No Data Available.",
+                    title: "No Data available at the moment",
+                    media: IconPath.error,
+                    mediaSize: Get.height / 4,
                   );
                 }
               })

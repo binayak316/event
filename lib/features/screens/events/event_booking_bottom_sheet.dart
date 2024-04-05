@@ -198,7 +198,9 @@ class BookingEventBottomSheet extends StatelessWidget {
 
                         KhaltiScope.of(context).pay(
                             config: PaymentConfig(
-                              amount: c.price.value.toInt(),
+                              // amount: c.price.value.toInt(),
+                              amount: c.price.value.toInt() * 100,
+
                               productIdentity: 'event-booking-cost',
                               productName: 'event-ticket-price',
                             ),

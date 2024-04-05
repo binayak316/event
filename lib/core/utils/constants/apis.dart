@@ -34,6 +34,6 @@ class Api {
 
   static final String bookEvent = "$baseUrl$prefix$auth/book-event";
 
-  static final String searchEvents = "$baseUrl$prefix$auth/searchevent";
+  static final String searchEvents = "$baseUrl$prefix$auth/searchevent?title=#keyword#";
   static final String bookedEvents = "$baseUrl$prefix$auth/getorganizerevent";
 }

@@ -50,11 +50,9 @@ class HomeScreen extends StatelessWidget {
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.name,
             ),
-
             const SizedBox(
               height: 10,
             ),
-
             SizedBox(
               height: 100,
               child: Obx(() {
@@ -87,45 +85,10 @@ class HomeScreen extends StatelessWidget {
                 }
               }),
             ),
-
             Text(
               "Popular Events",
               style: CustomTextStyles.f20W600(color: AppColors.primary),
             ),
-            // Expanded(
-            //   child: SizedBox(
-            //     child: GridView.builder(
-            //       shrinkWrap: true,
-            //       // physics: AlwaysScrollableScrollPhysics(),
-            //       // physics: const NeverScrollableScrollPhysics(),
-            //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //           crossAxisCount: 2, // number of items in each row
-            //           mainAxisSpacing: 20, // spacing between rows
-            //           crossAxisSpacing: 20,
-            //           childAspectRatio: 0.9 // spacing between columns
-            //           ),
-            //       // padding: const EdgeInsets.all(
-            //       //     8.0), // padding around the grid
-            //       itemCount: 20,
-            //       itemBuilder: (context, index) {
-            //         return InkWell(
-            //           onTap: () {
-            //             // Get.toNamed(Routes.map_screen);
-            //           },
-            //           child: EventCard(
-            //             icon: IconPath.apple,
-            //             title: "New Year Eve",
-            //             location: "Pokhra-6-leknath",
-            //             price: "Rs. 1000",
-            //             onTap: () {},
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // ),
-
-            // [[[[[[[[[[[[[[]]]]]]]]]]]]]]
             Expanded(
               child: Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
@@ -185,12 +148,12 @@ class EventCategory extends StatelessWidget {
       padding: const EdgeInsets.all(2),
       decoration: const BoxDecoration(),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: const SkyNetworkImage(
-              imageUrl: "https://picsum.photos/200/300",
+              imageUrl: "",
               width: 60,
               height: 60,
               boxFit: BoxFit.fill,

@@ -287,11 +287,14 @@ class EventRepo {
   }
 
   static Future<void> searchEvents({
+    String? keyword,
     required Function(List<EventModel> events) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.searchEvents;
+      // String url = Api.searchEvents;
+      String url =
+          (Api.searchEvents.replaceAll("#keyword#", keyword.toString()));
 
       http.Response response = await AppRequest.get(
         url,

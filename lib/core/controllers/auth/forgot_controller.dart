@@ -25,7 +25,7 @@ class ForgotPasswordController extends GetxController {
           },
           onError: (message) {
             loading.hide();
-            GearSnackBar.error(title: "Login Failed", message: message);
+            GearSnackBar.error(title: "Forgot password", message: message);
           });
     }
   }
