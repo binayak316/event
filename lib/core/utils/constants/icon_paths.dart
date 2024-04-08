@@ -17,7 +17,8 @@ class IconPath {
   static const String unAuth = "$basePath/unAuth.svg";
   static const String organizer = "$basePath/organizer.svg";
   static const String minus = "$basePath/minus.svg";
-    static const String error = "$basePath/error.svg";
+  static const String error = "$basePath/error.svg";
+  static const String empty = "$basePath/empty.svg";
 
   static const String plus = "$basePath/plus.svg";
 

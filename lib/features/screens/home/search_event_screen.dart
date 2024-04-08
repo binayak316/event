@@ -56,8 +56,11 @@ class SearchEventScreen extends StatelessWidget {
                     mediaSize: Get.height / 4,
                   );
                 } else if (c.pageState.value == PageState.EMPTY) {
-                  return Center(
-                    child: Text("Empty"),
+                  return EmptyView(
+                    message: "Looks like Empty",
+                    title: "There is no events available.",
+                    media: IconPath.empty,
+                    mediaSize: Get.height / 4,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return SizedBox(
