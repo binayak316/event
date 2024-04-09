@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/add_event_request_model.dart';
@@ -340,4 +341,136 @@ class EventRepo {
       onError(Messages.error);
     }
   }
+
+  static Future<void> deleteEvent({
+    required int eventId,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = "${Api.deleteEvents}/$eventId";
+
+      http.Response response = await AppRequest.post(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        var msg = data['message'];
+        onSuccess(msg);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.deleteEvents, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> addToFavourite({
+    required int eventId,
+    required VoidCallback onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      // String url = "${Api.addFavourite}/$eventId";
+      String url = "${Api.addFavourite}";
+
+      var body = {
+        "event_id": eventId,
+      };
+
+      http.Response response = await AppRequest.post(
+        url,
+        body: body,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        // var msg = data['message'];
+        // onSuccess(msg);
+        onSuccess();
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.addFavourite, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getWishlistProducts({
+    // String? nextPageUrl,
+    required Function(List<EventModel> favEventList) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getFavList;
+      http.Response response = await AppRequest.get(url);
+      dynamic data = json.decode(response.body);
+      if (data["status"]) {
+        var favEventList = eventsFromJson(data['data']);
+        print("------------------fav events -----${favEventList}");
+        onSuccess(favEventList);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getFavList, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> removeItem({
+    required num productId,
+    required VoidCallback onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      // String url = "${Api.deleteFav}?id=$productId";
+      String url = Api.deleteFav;
+
+      var body = {
+        "event_id": productId,
+      };
+
+      http.Response response = await AppRequest.post(url, body: body);
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        onSuccess();
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.deleteFav, error: e, stackTrace: s);
+    }
+  }
+
+   static Future<void> check({
+    required num eventId,
+    required VoidCallback onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = "${Api.checkFavourites}?id=$eventId";
+
+      http.Response response = await AppRequest.get(url);
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        onSuccess();
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error("${Api.checkFavourites}?id=$eventId",
+          error: e, stackTrace: s);
+    }
+  }
+
 }

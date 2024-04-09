@@ -34,6 +34,15 @@ class Api {
 
   static final String bookEvent = "$baseUrl$prefix$auth/book-event";
 
-  static final String searchEvents = "$baseUrl$prefix$auth/searchevent?title=#keyword#";
+  static final String searchEvents =
+      "$baseUrl$prefix$auth/searchevent?title=#keyword#";
   static final String bookedEvents = "$baseUrl$prefix$auth/getorganizerevent";
+
+  static final String deleteEvents = "$baseUrl$prefix$auth/deletevent";
+  static final String addFavourite = "$baseUrl$prefix$auth/addtofavourites";
+  static final String deleteFav = "$baseUrl$prefix$auth/deletefavouriteevent";
+  static final String getFavList =
+      "$baseUrl$prefix$auth/getorganizerfavouriteevent";
+
+  static String checkWishListUrl = "$baseUrl$prefix/auth/wishlist-check";
 }

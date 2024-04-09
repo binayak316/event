@@ -19,7 +19,7 @@ class MyBookedEventsScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "My Events",
+          "Booked Events",
           style: CustomTextStyles.f16W600(),
         ),
       ),

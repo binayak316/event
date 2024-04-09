@@ -2,10 +2,13 @@ import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
+import 'package:event/core/utils/constants/icon_paths.dart';
+import 'package:event/core/widgets/common/common_alert.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:event/features/screens/my_events/controller/my_event_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
@@ -55,6 +58,11 @@ class MyEventsScreen extends StatelessWidget {
                           var event = c.eventList[index];
                           return MyEventRowWidget(
                             event: event,
+                            //  onEdit: () => c.onEditClick(product),
+                            onEdit: () {},
+                            onConfirmDelete: () {
+                              c.deleteProduct(event.id!);
+                            },
                           );
                         },
                         separatorBuilder: (context, index) {
@@ -80,9 +88,13 @@ class MyEventsScreen extends StatelessWidget {
 
 class MyEventRowWidget extends StatelessWidget {
   final EventModel event;
+  final Function() onConfirmDelete;
+  final Function() onEdit;
   const MyEventRowWidget({
     super.key,
     required this.event,
+    required this.onConfirmDelete,
+    required this.onEdit,
   });
 
   @override
@@ -99,13 +111,12 @@ class MyEventRowWidget extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: SkyNetworkImage(
                   imageUrl: "${Api.imageUrl}${event.thumbnail}",
-
-                  // imageUrl: "https://picsum.photos/200/300",
                   width: 60,
                   height: 60,
                   boxFit: BoxFit.fill,
@@ -116,6 +127,7 @@ class MyEventRowWidget extends StatelessWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     event.eventTitle ?? "",
@@ -189,12 +201,56 @@ class MyEventRowWidget extends StatelessWidget {
                     ),
                 ],
               ),
+              const SizedBox(
+                width: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkResponse(
+                    onTap: onEdit,
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 247, 238, 238),
+                          shape: BoxShape.circle),
+                      child: SvgPicture.asset(
+                        IconPath.edit,
+                        width: 10,
+                        height: 10,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  InkResponse(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext ctx) {
+                            return CustomAlertDialog(
+                                title: "Do you really want to delete ?",
+                                message: "You cannot undo this action",
+                                onConfirm: onConfirmDelete,
+                                confirmText: "Yes");
+                          });
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 247, 238, 238),
+                            shape: BoxShape.circle),
+                        child: SvgPicture.asset(
+                          IconPath.delete,
+                          width: 10,
+                          height: 10,
+                        )),
+                  ),
+                ],
+              ),
             ],
           ),
-          const Icon(
-            Icons.more_vert,
-            color: AppColors.blackColor,
-          )
         ],
       ),
     );

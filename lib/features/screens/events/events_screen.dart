@@ -47,10 +47,6 @@ class EventsScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var event = c.eventList[index];
                           return EventTileCard(
-                            // imageUrl: "",
-                            // location: "Pkr lakeside",
-                            // eventTitle: "Random",
-                            // price: "Rs. 1000",
                             eventModel: event,
                           );
                         });
@@ -276,21 +272,21 @@ class EventTileCard extends StatelessWidget {
                 const SizedBox(
                   width: 4,
                 ),
-                if (eventModel.organizerId !=
-                    c.coreController.currentUser.value?.id)
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      "Get Details to Book",
-                      style:
-                          CustomTextStyles.f14W300(color: AppColors.whiteColor),
-                    ),
+                // if (eventModel.organizerId !=
+                //     c.coreController.currentUser.value?.id)
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(10),
                   ),
+                  child: Text(
+                    "Get Details to Book",
+                    style:
+                        CustomTextStyles.f14W300(color: AppColors.whiteColor),
+                  ),
+                ),
               ],
             )
           ],

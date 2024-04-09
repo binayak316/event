@@ -35,14 +35,41 @@ class EventDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ),
-              SkyNetworkImage(
-                // imageUrl: "",
-                imageUrl: "${Api.imageUrl}${c.event.value?.thumbnail}",
-                // height: 80,
-                width: Get.width,
-                height: 350,
-                boxFit: BoxFit.cover,
-                // alignment: Alignment.center,
+              Stack(
+                children: [
+                  SkyNetworkImage(
+                    // imageUrl: "",
+                    imageUrl: "${Api.imageUrl}${c.event.value?.thumbnail}",
+                    // height: 80,
+                    width: Get.width,
+                    height: 350,
+                    boxFit: BoxFit.cover,
+                    // alignment: Alignment.center,
+                  ),
+                  Obx(() => Positioned(
+                        right: 5,
+                        top: 10,
+                        child: InkResponse(
+                            onTap: c.toggleFav,
+                            child: c.isLoadingFav.value
+                                ? const SizedBox(
+                                    height: 15,
+                                    width: 15,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : c.isFav.value
+                                    ? Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                      )
+                                    : Icon(
+                                        Icons.favorite_outline,
+                                        color: Colors.red,
+                                      )),
+                      ))
+                ],
               ),
 
               const SizedBox(

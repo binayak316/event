@@ -320,27 +320,7 @@ class EventAddScreen extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  Text(
-                    "Total Seats",
-                    style:
-                        CustomTextStyles.f16W400(color: AppColors.blackColor),
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  PrimaryTextField(
-                    hint: "Total Seats",
-                    textInputAction: TextInputAction.next,
-                    textInputType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    validator: Validators.checkFieldEmpty,
-                    controller: c.totalSeatsController,
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
+
                   Text(
                     "Total VIP seats",
                     style:
@@ -358,6 +338,12 @@ class EventAddScreen extends StatelessWidget {
                     ],
                     validator: Validators.checkFieldEmpty,
                     controller: c.totalVipSeatsController,
+                    onTap: () {
+                      c.onCalculateTotalSeat();
+                    },
+                    onValueChange: (value) {
+                      c.onCalculateTotalSeat();
+                    },
                   ),
 
                   const SizedBox(
@@ -380,6 +366,31 @@ class EventAddScreen extends StatelessWidget {
                     ],
                     validator: Validators.checkFieldEmpty,
                     controller: c.totalPublicseatsController,
+                    onTap: () {
+                      c.onCalculateTotalSeat();
+                    },
+                    onValueChange: (value) {
+                      c.onCalculateTotalSeat();
+                    },
+                  ),
+                  Text(
+                    "Total Seats",
+                    style:
+                        CustomTextStyles.f16W400(color: AppColors.blackColor),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  PrimaryTextField(
+                    hint: "Total Seats",
+                    textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    validator: Validators.checkFieldEmpty,
+                    readOnly: true,
+                    controller: c.totalSeatsController,
                   ),
 
                   const SizedBox(

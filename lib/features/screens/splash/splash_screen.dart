@@ -1,8 +1,7 @@
 import 'package:event/core/controllers/splash_controller.dart';
-import 'package:event/core/utils/constants/icon_paths.dart';
+import 'package:event/core/utils/constants/image_path.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/constants/colors.dart';
@@ -17,13 +16,20 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center ,
           children: [
-            SvgPicture.asset(IconPath.cupLogo),
+            // SvgPicture.asset(IconPath.cupLogo),
+            Image.asset(
+              ImagePath.applogo,
+              height: 100,
+              width: 100,
+            ),
             const SizedBox(
               height: 20,
             ),
             Text(
-              "Let us to handle your EVENT",
+              "Let us to handle events for you",
               style: CustomTextStyles.f16W600(color: AppColors.blackColor),
             )
           ],

@@ -6,10 +6,13 @@ import 'package:event/core/controllers/dashscreen/profile/profile_controller.dar
 import 'package:event/core/controllers/dashscreen/search_event/search_event_controller.dart';
 import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
+import 'package:event/features/screens/favourites/controller/favourite_controller.dart';
 import 'package:event/features/screens/home/search_event_screen.dart';
+import 'package:event/features/screens/profile/profile_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../features/screens/dashscreen/dashboard_panel.dart';
+import '../../../features/screens/favourites/presentation/favourites_screen.dart';
 import '../../../features/screens/my_events/controller/my_event_controller.dart';
 import '../../../features/screens/my_events/presentation/my_events_screen.dart';
 import '../../controllers/dashscreen/dash_page_manager_controller.dart';
@@ -40,15 +43,15 @@ final List<GetPage> dashScreenPages = <GetPage>[
     ),
   ),
 
-  // GetPage(
-  //   name: FavouritesScreen.routeName,
-  //   page: () => FavouritesScreen(),
-  //   binding: BindingsBuilder(
-  //     () {
-  //       Get.lazyPut(() => FavouriteController());
-  //     },
-  //   ),
-  // ),
+  GetPage(
+    name: FavouritesScreen.routeName,
+    page: () => FavouritesScreen(),
+    binding: BindingsBuilder(
+      () {
+        Get.lazyPut(() => FavouriteController());
+      },
+    ),
+  ),
 
   GetPage(
     name: MyEventsScreen.routeName,

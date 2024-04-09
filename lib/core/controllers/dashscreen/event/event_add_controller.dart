@@ -127,6 +127,13 @@ class EventAddController extends GetxController {
     totalPublicseatsController.text = '';
   }
 
+  onCalculateTotalSeat() {
+    var totalSeat = int.parse(totalPublicseatsController.text) +
+        int.parse(totalVipSeatsController.text);
+
+    totalSeatsController.text = totalSeat.toString();
+  }
+
   Future<void> onSubmit() async {
     if (eventKey.currentState!.validate()) {
       loading.show();

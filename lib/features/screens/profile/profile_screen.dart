@@ -3,6 +3,7 @@ import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/features/screens/booked_events/my_booked_events.dart';
+import 'package:event/features/screens/favourites/presentation/favourites_screen.dart';
 import 'package:event/features/screens/my_events/presentation/my_events_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -177,7 +178,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 ProfileTiles(
                   onTap: () {
-                    // Get.toNamed(FavouritesScreen.routeName);
+                    Get.toNamed(FavouritesScreen.routeName);
                   },
                   iconUrl: IconPath.fav,
                   title: "Favourite",
@@ -229,8 +230,6 @@ class ProfileScreen extends StatelessWidget {
     ));
   }
 }
-
-class FavouritesScreen {}
 
 class ProfileTiles extends StatelessWidget {
   final String? iconUrl;

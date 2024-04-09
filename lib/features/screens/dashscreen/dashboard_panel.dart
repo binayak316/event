@@ -69,7 +69,7 @@ class DashPageManager extends StatelessWidget {
                     height: 20,
                     width: 20,
                   ),
-                  label: "Event",
+                  label: "Add Event",
                 ),
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(

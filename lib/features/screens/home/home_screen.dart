@@ -2,6 +2,7 @@ import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
+import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:event/core/widgets/common/text_form_field.dart';
@@ -9,6 +10,7 @@ import 'package:event/core/widgets/shimmer/category_shimmer.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:event/features/screens/home/search_event_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/controllers/dashscreen/home_screen_controller.dart';
@@ -168,19 +170,10 @@ class EventCategory extends StatelessWidget {
 
 class EventCard extends StatelessWidget {
   final c = Get.find<HomeScreenController>();
-  // final String? icon;
-  // final String? title;
-  // final VoidCallback? onTap;
-  // final String? location;
-  // final String? price;
+
   final EventModel event;
   EventCard({
     super.key,
-    // required this.icon,
-    // required this.title,
-    // this.onTap,
-    // this.location,
-    // required this.price,
     required this.event,
   });
 
@@ -211,35 +204,30 @@ class EventCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SvgPicture.network(
-            //   // APIPathHelper.imageUrl + icon.toString(),
-            //   // IconPath.apple,
-            //   "$icon",
-            //   height: 35,
-            //   width: 35,
-            //   alignment: Alignment.center,
-            // ),
             Expanded(
-              flex: 3,
-              child: Align(
-                alignment: Alignment.center,
-                child:
-                    //  SvgPicture.asset(
-                    //   "$icon",
-                    //   height: 80,
-                    //   width: 80,
-                    //   alignment: Alignment.center,
-                    // ),
-                    SkyNetworkImage(
-                  imageUrl: "${Api.imageUrl}${event.thumbnail}",
-                  height: 80,
-                  // width: 80,
-                  boxFit: BoxFit.fitWidth,
-                  // alignment: Alignment.center,
-                ),
-              ),
-            ),
-
+                flex: 3,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: SkyNetworkImage(
+                        imageUrl: "${Api.imageUrl}${event.thumbnail}",
+                        height: 75,
+                        // width: 80,
+                        boxFit: BoxFit.fitWidth,
+                        // alignment: Alignment.center,
+                      ),
+                    ),
+                    Positioned(
+                        right: 0,
+                        top: 0,
+                        child: SvgPicture.asset(
+                          IconPath.fav,
+                          height: 20,
+                          width: 20,
+                        ))
+                  ],
+                )),
             Expanded(
                 flex: 2,
                 child: Column(
