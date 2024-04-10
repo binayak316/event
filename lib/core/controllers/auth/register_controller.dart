@@ -43,7 +43,7 @@ class RegisterController extends GetxController {
       var user = User(
         name: fullNameController.text,
         address: addressController.text,
-        phone: phoneController.text,
+        phonenumber: phoneController.text,
         email: emailController.text,
         gender: gender.value == "Male" ? "1" : "0",
       );

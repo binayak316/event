@@ -1,11 +1,13 @@
 import 'package:event/core/controllers/dashscreen/home_screen_controller.dart';
+import 'package:event/core/model/category_model.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VenueTypeBottomSheet extends StatelessWidget {
-  final Function(String venueType) onSelectVenueType;
+  // final Function(String venueType) onSelectVenueType;
+  final Function(CategoryModel venueType) onSelectVenueType;
   final homeController = Get.find<HomeScreenController>();
   VenueTypeBottomSheet({
     super.key,
@@ -67,7 +69,8 @@ class VenueTypeBottomSheet extends StatelessWidget {
                 return ListTile(
                   onTap: () {
                     Navigator.of(context).pop();
-                    onSelectVenueType(category.title ?? "");
+                    // onSelectVenueType(category.title ?? "");
+                    onSelectVenueType(category);
                   },
                   title: Text(
                     category.title ?? "",

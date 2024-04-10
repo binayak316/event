@@ -104,6 +104,14 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
+                    Text(
+                      "Address",
+                      style:
+                          CustomTextStyles.f16W400(color: AppColors.blackColor),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
                     PrimaryTextField(
                       hint: "Address",
                       textInputAction: TextInputAction.next,

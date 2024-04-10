@@ -5,6 +5,7 @@ import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/favourites/presentation/favourites_screen.dart';
 import 'package:event/features/screens/my_events/presentation/my_events_screen.dart';
+import 'package:event/features/screens/profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -81,19 +82,25 @@ class ProfileScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      c.coreController.currentUser.value?.name ?? "",
-                      style: CustomTextStyles.f20W600(),
+                    Obx(
+                      () => Text(
+                        c.coreController.currentUser.value?.name ?? "",
+                        style: CustomTextStyles.f20W600(),
+                      ),
                     ),
-                    Text(
-                      c.coreController.currentUser.value?.email ?? "",
-                      style: CustomTextStyles.f16W700(),
+                    Obx(
+                      () => Text(
+                        c.coreController.currentUser.value?.email ?? "",
+                        style: CustomTextStyles.f16W700(),
+                      ),
                     ),
-                    Text(
-                      c.coreController.currentUser.value?.status == "1"
-                          ? "Organizer"
-                          : "User",
-                      style: CustomTextStyles.f16W700(),
+                    Obx(
+                      () => Text(
+                        c.coreController.currentUser.value?.status == "1"
+                            ? "Organizer"
+                            : "User",
+                        style: CustomTextStyles.f16W700(),
+                      ),
                     ),
                   ],
                 ),
@@ -105,7 +112,9 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 ProfileTiles(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(UpdateProfileScreen.routeName);
+                  },
                   iconUrl: IconPath.user,
                   title: "Profile Setting",
                 ),

@@ -3,7 +3,8 @@ class AddEventRequestParams {
   String? description;
   String? eventDate;
   String? eventTime;
-  String? category;
+  // String? category;
+  int? category;
 
   String? location;
   // String? thumbnail;

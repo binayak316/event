@@ -1,3 +1,4 @@
+import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
@@ -56,7 +57,7 @@ class HomeScreen extends StatelessWidget {
               height: 10,
             ),
             SizedBox(
-              height: 100,
+              height: 50,
               child: Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
                   return Center(
@@ -67,19 +68,99 @@ class HomeScreen extends StatelessWidget {
                     child: Text("Empty"),
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
-                  return ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        var category = c.categoryList[index];
-                        return EventCategory(category: category.title ?? "");
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          width: 10,
-                        );
-                      },
-                      itemCount: c.categoryList.length);
+                  // return ListView.separated(
+                  //     shrinkWrap: true,
+                  //     scrollDirection: Axis.horizontal,
+                  //     itemBuilder: (context, index) {
+                  //       var category = c.categoryList[index];
+                  //       return EventCategory(
+                  //         // category: category.title ?? "",
+                  //         categoryModel: category,
+                  //       );
+                  //     },
+                  //     separatorBuilder: (context, index) {
+                  //       return const SizedBox(
+                  //         width: 10,
+                  //       );
+                  //     },
+                  //     itemCount: c.categoryList.length);
+                  return Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          c.selectedIndex.value = -1;
+                          c.getAllEvents();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          decoration: BoxDecoration(
+                            color: c.selectedIndex.value == -1
+                                ? AppColors.primary
+                                : AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            "All",
+                            style: CustomTextStyles.f16W300(
+                                color: c.selectedIndex.value == -1
+                                    ? AppColors.whiteColor
+                                    : AppColors.primary),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        // height: 50,
+                        child: ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                width: 5,
+                              );
+                            },
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: c.categoryList.length,
+                            itemBuilder: (context, index) {
+                              var category = c.categoryList[index];
+                              if (category != null) {
+                                return Obx(
+                                  () => GestureDetector(
+                                    onTap: () {
+                                      c.selectedIndex.value = index;
+                                      c.getProductsByCategoryId(
+                                          category.id!);
+                                    },
+                                    child: EventCategory(
+                                      categoryModel: category,
+                                      backgroundColor: index ==
+                                              c.selectedIndex.value
+                                          ? AppColors
+                                              .primary // Change background color if index matches selected index
+                                          : AppColors.whiteColor,
+                                      textColor: index == c.selectedIndex.value
+                                          ? AppColors
+                                              .whiteColor // Change text color if index matches selected index
+                                          : AppColors.primary,
+
+                                      // backgroundColor: AppColors.primary,
+                                      // textColor: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: Text(
+                                      "Error while fetching the categories"),
+                                );
+                              }
+                            }),
+                      ),
+                    ],
+                  );
                 } else {
                   return Center(
                     child: Text("Error View"),
@@ -134,35 +215,59 @@ class HomeScreen extends StatelessWidget {
 }
 
 class EventCategory extends StatelessWidget {
-  final String? category;
+  // final String? category;
+  final CategoryModel categoryModel;
   final Color? backgroundColor;
   final Color? textColor;
   const EventCategory({
     super.key,
-    required this.category,
+    // required this.category,
     this.textColor,
     this.backgroundColor,
+    required this.categoryModel,
   });
 
   @override
   Widget build(BuildContext context) {
+    // return Container(
+    //   padding: const EdgeInsets.all(2),
+    //   decoration: const BoxDecoration(),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.center,
+    //     children: [
+    //       InkResponse(
+    //         onTap: () {
+    //           print(categoryModel.id);
+    //           print(categoryModel.title);
+    //         },
+    //         child: ClipRRect(
+    //           borderRadius: BorderRadius.circular(50),
+    //           child: const SkyNetworkImage(
+    //             imageUrl: "",
+    //             width: 60,
+    //             height: 60,
+    //             boxFit: BoxFit.fill,
+    //           ),
+    //         ),
+    //       ),
+    //       Text(categoryModel.title ?? "")
+    //     ],
+    //   ),
+    // );
+
     return Container(
-      padding: const EdgeInsets.all(2),
-      decoration: const BoxDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: const SkyNetworkImage(
-              imageUrl: "",
-              width: 60,
-              height: 60,
-              boxFit: BoxFit.fill,
-            ),
-          ),
-          Text(category ?? "")
-        ],
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Center(
+        child: Text(
+          categoryModel.title ?? "",
+          style: CustomTextStyles.f16W300(
+              //TODO condition anusar check garne
+              color: textColor),
+        ),
       ),
     );
   }

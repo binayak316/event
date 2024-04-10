@@ -2,7 +2,7 @@ class User {
   String? id;
   String? name;
   String? email;
-  String? phone;
+  String? phonenumber;
   String? gender;
   String? address;
   String? status;
@@ -11,7 +11,7 @@ class User {
     this.id,
     this.name,
     this.email,
-    this.phone,
+    this.phonenumber,
     this.gender,
     this.address,
     this.status,
@@ -21,7 +21,7 @@ class User {
     id = json['id'].toString();
     name = json['name'];
     email = json['email'];
-    phone = json['phone'];
+    phonenumber = json['phonenumber'];
     gender = json['gender'];
     address = json['address'];
     status = json['status'];
@@ -32,7 +32,7 @@ class User {
     data['id'] = id;
     data['name'] = name;
     data['email'] = email;
-    data['phone'] = phone;
+    data['phonenumber'] = phonenumber;
     data['gender'] = gender;
     data['address'] = address;
     data['status'] = status;

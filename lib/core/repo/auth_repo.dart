@@ -22,7 +22,7 @@ class AuthRepo {
 
       var body = {
         "name": user.name,
-        "phonenumber": user.phone,
+        "phonenumber": user.phonenumber,
         "email": user.email,
         "address": user.address,
         "gender": user.gender,
@@ -198,6 +198,47 @@ class AuthRepo {
     } catch (e, s) {
       LogHelper.error(Api.changePw, error: e, stackTrace: s);
       onError(Messages.error);
+    }
+  }
+
+  static Future<void> updateProfile({
+    required User user,
+    // required Function(User user) onSuccess,
+    // required Function(User user) onSuccess,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.updateProfile;
+
+      print("--------------------------------------$url");
+      var body = {
+        "name": user.name,
+        "phonenumber": user.phonenumber,
+        "address": user.address,
+        "gender": user.gender,
+        "email": user.email,
+      };
+
+      http.Response response = await AppRequest.post(url, body: body);
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        var user = User.fromJson(data['data']['user']);
+
+        print("=====u=====>$user");
+        StorageHelper.saveUser(user);
+        // onSuccess(user);
+        onSuccess(data['message']);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.updateProfile, error: e, stackTrace: s);
+      onError(Messages.error);
+
+      print(e);
     }
   }
 }

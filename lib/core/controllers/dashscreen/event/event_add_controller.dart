@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/add_event_request_model.dart';
 import 'package:event/core/model/location_model.dart';
 import 'package:event/core/repo/event/event_repo.dart';
@@ -41,6 +42,8 @@ class EventAddController extends GetxController {
   final eventDescriptionController = TextEditingController();
 
   RxList<LocationModel> venueList = RxList();
+  Rxn<CategoryModel> categoryModel = Rxn();
+
   @override
   void onInit() {
     getAllVenues();
@@ -74,8 +77,10 @@ class EventAddController extends GetxController {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: VenueTypeBottomSheet(
-            onSelectVenueType: (venueType) {
-              eventTypeController.text = venueType;
+            onSelectVenueType: (eventType) {
+              eventTypeController.text = eventType.title.toString();
+
+              this.categoryModel.value = eventType;
             },
           ),
         );
@@ -116,7 +121,7 @@ class EventAddController extends GetxController {
     eventNameController.text = '';
     eventDateController.text = '';
     eventTimeController.text = '';
-    // eventTypeController.text = '';
+    eventTypeController.text = '';
     pickedFile.value = null;
     eventVenueController.clear();
     eventVipPriceController.text = '';
@@ -135,40 +140,39 @@ class EventAddController extends GetxController {
   }
 
   Future<void> onSubmit() async {
-    if (eventKey.currentState!.validate()) {
-      loading.show();
-      AddEventRequestParams addEventRequestParams = AddEventRequestParams(
-        eventTitle: eventNameController.text,
-        eventDate: eventDateController.text,
-        eventTime: eventTimeController.text,
-        category: eventTypeController.text,
-        // thumbnail: pickedFile.toString(),
-        location: eventVenueController.text,
-        vipSeatsPrice: eventVipPriceController.text,
-        totalSeats: totalSeatsController.text,
-        publicSeatsPrice: eventPublicPriceController.text,
-        description: eventDescriptionController.text,
-        totalVipSeats: totalVipSeatsController.text,
-        totalPublicSeats: totalPublicseatsController.text,
-      );
-      await EventRepo.addEvent(
-          addEventParams: addEventRequestParams,
-          file: pickedFile.value,
-          onSuccess: (message) {
-            loading.hide();
-            // Get.offAllNamed(DashPageManager.routeName);
-            // Get.put(DashboardPanelController()).currentIndex.value =
-            //     0; //TODO implementation
-            clearVariables();
-            GearSnackBar.success(
-                title: "Add Event Success",
-                message: "Event Added successfully");
-          },
-          onError: (message) {
-            loading.hide();
-            GearSnackBar.error(title: "Login Failed", message: message);
-          });
-    }
+    print(categoryModel.value!.id); // if (eventKey.currentState!.validate()) {
+    loading.show();
+    AddEventRequestParams addEventRequestParams = AddEventRequestParams(
+      eventTitle: eventNameController.text,
+      eventDate: eventDateController.text,
+      eventTime: eventTimeController.text,
+      // category: eventTypeController.text,
+      category: int.parse(categoryModel.value!.id!.toString()),
+      // thumbnail: pickedFile.toString(),
+      location: eventVenueController.text,
+      vipSeatsPrice: eventVipPriceController.text,
+      totalSeats: totalSeatsController.text,
+      publicSeatsPrice: eventPublicPriceController.text,
+      description: eventDescriptionController.text,
+      totalVipSeats: totalVipSeatsController.text,
+      totalPublicSeats: totalPublicseatsController.text,
+    );
+    await EventRepo.addEvent(
+        addEventParams: addEventRequestParams,
+        file: pickedFile.value,
+        onSuccess: (message) {
+          loading.hide();
+          // Get.offAllNamed(DashPageManager.routeName);
+          // Get.put(DashboardPanelController()).currentIndex.value =
+          //     0; //TODO implementation
+          clearVariables();
+          GearSnackBar.success(
+              title: "Add Event Success", message: "Event Added successfully");
+        },
+        onError: (message) {
+          loading.hide();
+          GearSnackBar.error(title: "Login Failed", message: message);
+        });
   }
 
   Rx<PageState> pageState = PageState.LOADING.obs;

@@ -32,6 +32,9 @@ class HomeScreenController extends GetxController {
 
 // //   RxString movieDateStore = RxString("");
 
+  RxInt selectedIndex = (-1).obs;
+
+
   void getAllCategories() async {
     categoryList.clear();
     EventRepo.getCategories(
@@ -40,6 +43,26 @@ class HomeScreenController extends GetxController {
           pageState.value = PageState.EMPTY;
         } else {
           categoryList.addAll(categories);
+          pageState.value = PageState.NORMAL;
+        }
+      },
+      onError: (message) {
+        pageState.value = PageState.ERROR;
+        LogHelper.error(message);
+      },
+    );
+  }
+
+
+  void getProductsByCategoryId(int categoryId) async {
+    eventList.clear();
+    await EventRepo.getItemsByCategoryId(
+      categoryId: categoryId.toString(),
+      onSuccess: (products) {
+        if (products.isEmpty) {
+          pageState.value = PageState.EMPTY;
+        } else {
+          eventList.addAll(products);
           pageState.value = PageState.NORMAL;
         }
       },

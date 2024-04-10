@@ -450,13 +450,13 @@ class EventRepo {
     }
   }
 
-   static Future<void> check({
+  static Future<void> check({
     required num eventId,
     required VoidCallback onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = "${Api.checkFavourites}?id=$eventId";
+      String url = "${Api.checkWishListUrl}?id=$eventId";
 
       http.Response response = await AppRequest.get(url);
 
@@ -468,9 +468,36 @@ class EventRepo {
         onError(data['message']);
       }
     } catch (e, s) {
-      LogHelper.error("${Api.checkFavourites}?id=$eventId",
+      LogHelper.error("${Api.checkWishListUrl}?id=$eventId",
           error: e, stackTrace: s);
     }
   }
 
+  static Future<void> getItemsByCategoryId({
+    required String categoryId,
+    required Function(List<EventModel> events) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = "${Api.getEventById}?id=$categoryId";
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+      print("---------------response$response}");
+      var data = json.decode(response.body);
+      print(data);
+      if (data["status"]) {
+        var items = eventsFromJson(data['data']);
+
+        print("---cate${items}");
+        onSuccess(items);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getEventById, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 }
