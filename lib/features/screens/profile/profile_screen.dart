@@ -102,6 +102,14 @@ class ProfileScreen extends StatelessWidget {
                         style: CustomTextStyles.f16W700(),
                       ),
                     ),
+                    Obx(
+                      () => Text(
+                        c.coreController.currentUser.value?.gender == "1"
+                            ? "Male"
+                            : "Female",
+                        style: CustomTextStyles.f16W700(),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -116,7 +124,7 @@ class ProfileScreen extends StatelessWidget {
                     Get.toNamed(UpdateProfileScreen.routeName);
                   },
                   iconUrl: IconPath.user,
-                  title: "Profile Setting",
+                  title: "Update Profile",
                 ),
                 const SizedBox(
                   height: 10,

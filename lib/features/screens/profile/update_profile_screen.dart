@@ -19,13 +19,13 @@ class UpdateProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: AppColors.whiteColor, //change your color here
+          color: AppColors.blackColor, //change your color here
         ),
         centerTitle: true,
         title: Text(
           "Update Profile",
           style: CustomTextStyles.f16W600(
-            color: AppColors.whiteColor,
+            color: AppColors.primary,
           ),
         ),
       ),

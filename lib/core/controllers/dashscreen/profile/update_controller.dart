@@ -16,6 +16,7 @@ class UpdateProfileController extends GetxController {
   TextEditingController addressController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  RxString gender = RxString("Male");
 
   @override
   void onInit() {
@@ -23,7 +24,7 @@ class UpdateProfileController extends GetxController {
     nameController.text = coreController.currentUser.value?.name ?? "";
     phoneController.text = coreController.currentUser.value?.phonenumber ?? "";
     gender.value =
-        coreController.currentUser.value?.gender == 1 ? "Male" : "Female";
+        coreController.currentUser.value?.gender == "1" ? "Male" : "Female";
     addressController.text = coreController.currentUser.value?.address ?? "";
 
     emailController.text = coreController.currentUser.value?.email ?? "";
@@ -31,9 +32,8 @@ class UpdateProfileController extends GetxController {
     super.onInit();
   }
 
-  RxString gender = RxString("Male");
   void changeGender(String? data) {
-    gender.value = data ?? "Male";
+    gender.value = data ?? "Female";
   }
 
   RxBool showPass = RxBool(false);

@@ -1,10 +1,12 @@
 import 'package:event/core/controllers/dashscreen/event/event_add_controller.dart';
 import 'package:event/core/controllers/dashscreen/event/event_controller.dart';
 import 'package:event/core/controllers/dashscreen/event/event_detail_controller.dart';
+import 'package:event/core/controllers/dashscreen/event/update_event_controller.dart';
 import 'package:event/core/controllers/dashscreen/my_booked_events/my_booked_events_controller.dart';
 import 'package:event/core/controllers/dashscreen/profile/profile_controller.dart';
 import 'package:event/core/controllers/dashscreen/profile/update_controller.dart';
 import 'package:event/core/controllers/dashscreen/search_event/search_event_controller.dart';
+import 'package:event/features/screens/add_event/update_event_screen.dart';
 import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:event/features/screens/favourites/controller/favourite_controller.dart';
@@ -40,6 +42,16 @@ final List<GetPage> dashScreenPages = <GetPage>[
     binding: BindingsBuilder(
       () {
         Get.lazyPut(() => EventDetailController());
+      },
+    ),
+  ),
+
+   GetPage(
+    name: UpdateEventScreen.routeName,
+    page: () => UpdateEventScreen(),
+    binding: BindingsBuilder(
+      () {
+        Get.lazyPut(() => UpdateEventController());
       },
     ),
   ),

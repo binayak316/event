@@ -6,6 +6,7 @@ import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/common_alert.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
+import 'package:event/features/screens/add_event/update_event_screen.dart';
 import 'package:event/features/screens/my_events/controller/my_event_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,7 +60,10 @@ class MyEventsScreen extends StatelessWidget {
                           return MyEventRowWidget(
                             event: event,
                             //  onEdit: () => c.onEditClick(product),
-                            onEdit: () {},
+                            onEdit: () {
+                              Get.toNamed(UpdateEventScreen.routeName,
+                                  arguments: {"event": event});
+                            },
                             onConfirmDelete: () {
                               c.deleteProduct(event.id!);
                             },

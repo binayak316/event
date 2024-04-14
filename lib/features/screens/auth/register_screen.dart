@@ -230,7 +230,11 @@ class RegisterScreen extends StatelessWidget {
                               color: AppColors.primary),
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              // Get.offNamed(LoginScreen.routeName);
+                              // Navigator.of(context).pop();
+                              Get.back();
+                            },
                             child: Text(
                               "Login",
                               style: CustomTextStyles.f15W600(

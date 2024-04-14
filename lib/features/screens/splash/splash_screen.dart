@@ -17,13 +17,13 @@ class SplashScreen extends StatelessWidget {
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center ,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // SvgPicture.asset(IconPath.cupLogo),
             Image.asset(
-              ImagePath.applogo,
-              height: 100,
-              width: 100,
+              ImagePath.logo,
+              height: 200,
+              width: 200,
             ),
             const SizedBox(
               height: 20,

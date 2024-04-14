@@ -3,7 +3,6 @@ import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
-import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:event/core/widgets/common/text_form_field.dart';
@@ -11,7 +10,6 @@ import 'package:event/core/widgets/shimmer/category_shimmer.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:event/features/screens/home/search_event_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/controllers/dashscreen/home_screen_controller.dart';
@@ -131,8 +129,7 @@ class HomeScreen extends StatelessWidget {
                                   () => GestureDetector(
                                     onTap: () {
                                       c.selectedIndex.value = index;
-                                      c.getProductsByCategoryId(
-                                          category.id!);
+                                      c.getProductsByCategoryId(category.id!);
                                     },
                                     child: EventCategory(
                                       categoryModel: category,
@@ -323,14 +320,14 @@ class EventCard extends StatelessWidget {
                         // alignment: Alignment.center,
                       ),
                     ),
-                    Positioned(
-                        right: 0,
-                        top: 0,
-                        child: SvgPicture.asset(
-                          IconPath.fav,
-                          height: 20,
-                          width: 20,
-                        ))
+                    // Positioned(
+                    //     right: 0,
+                    //     top: 0,
+                    //     child: SvgPicture.asset(
+                    //       IconPath.fav,
+                    //       height: 20,
+                    //       width: 20,
+                    //     ))
                   ],
                 )),
             Expanded(
