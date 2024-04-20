@@ -4,6 +4,8 @@ import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
+import 'package:event/core/widgets/common/empty_view.dart';
+import 'package:event/core/widgets/common/error_view.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:event/core/widgets/common/text_form_field.dart';
 import 'package:event/core/widgets/shimmer/category_shimmer.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/controllers/dashscreen/home_screen_controller.dart';
+import '../../../core/utils/constants/icon_paths.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = "/home-screen";
@@ -47,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Get.toNamed(SearchEventScreen.routeName);
               },
-              hint: "Search...",
+              hint: "Search event",
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.name,
             ),
@@ -174,8 +177,11 @@ class HomeScreen extends StatelessWidget {
                 if (c.pageState.value == PageState.LOADING) {
                   return CategoryShimmer.categoryGrid();
                 } else if (c.pageState.value == PageState.EMPTY) {
-                  return const Center(
-                    child: Text("Empty"),
+                  return EmptyView(
+                    message: "No data available",
+                    title: "Not available",
+                    media: IconPath.searching,
+                    mediaSize: Get.height / 4,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return SizedBox(
@@ -198,8 +204,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return const Center(
-                    child: Text("Error View"),
+                  return ErrorView(
+                    message: "No Data Available.",
+                    title: "No Data available at the moment",
+                    media: IconPath.error,
+                    // mediaSize: Get.height / 4,
                   );
                 }
               }),

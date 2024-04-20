@@ -13,11 +13,6 @@ class MyBookedEventController extends GetxController {
   void onInit() {
     getMyEvents();
 
-    // var args = Get.arguments;
-    // if (args != null) {
-    //   print("--------------------args=========${args}");
-    //   event.value = args['event'];
-    // }
     super.onInit();
   }
 
@@ -37,6 +32,7 @@ class MyBookedEventController extends GetxController {
         if (events.isEmpty) {
           pageState.value = PageState.EMPTY;
         } else {
+          print("-------api events------------${events}");
           bookedEventList.addAll(events);
           pageState.value = PageState.NORMAL;
         }

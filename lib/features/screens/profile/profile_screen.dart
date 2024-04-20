@@ -79,38 +79,84 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(
-                      () => Text(
-                        c.coreController.currentUser.value?.name ?? "",
-                        style: CustomTextStyles.f20W600(),
-                      ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(
+                          () => RichText(
+                            text: TextSpan(
+                              text: 'Name:  ',
+                              style:
+                                  CustomTextStyles.f16W600(color: Colors.grey),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${c.coreController.currentUser.value?.name ?? ""}'
+                                          .toUpperCase(),
+                                  style: CustomTextStyles.f16W600(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Obx(
+                          () => RichText(
+                            text: TextSpan(
+                              text: 'Email:  ',
+                              style:
+                                  CustomTextStyles.f16W600(color: Colors.grey),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${c.coreController.currentUser.value?.email ?? ""}',
+                                  style: CustomTextStyles.f16W600(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Obx(
+                          () => RichText(
+                            text: TextSpan(
+                              text: 'Gender:  ',
+                              style:
+                                  CustomTextStyles.f16W600(color: Colors.grey),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${c.coreController.currentUser.value?.gender == "1" ? "Male" : "Female"}',
+                                  style: CustomTextStyles.f16W600(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Obx(
+                          () => RichText(
+                            text: TextSpan(
+                              text: 'Role:  ',
+                              style:
+                                  CustomTextStyles.f16W600(color: Colors.grey),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${c.coreController.currentUser.value?.status == "1" ? "Organizer" : "User"}',
+                                  style: CustomTextStyles.f16W600(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Obx(
-                      () => Text(
-                        c.coreController.currentUser.value?.email ?? "",
-                        style: CustomTextStyles.f16W700(),
-                      ),
-                    ),
-                    Obx(
-                      () => Text(
-                        c.coreController.currentUser.value?.status == "1"
-                            ? "Organizer"
-                            : "User",
-                        style: CustomTextStyles.f16W700(),
-                      ),
-                    ),
-                    Obx(
-                      () => Text(
-                        c.coreController.currentUser.value?.gender == "1"
-                            ? "Male"
-                            : "Female",
-                        style: CustomTextStyles.f16W700(),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

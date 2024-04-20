@@ -3,9 +3,10 @@ class Api {
   // static final String baseUrl = "https://development.hamropahal.org";
   // static final String imageUrl =
 
-  static final String baseUrl = "https://development2.hamropahal.org";
+  static final String baseUrl = "http://development.hamropahal.org";
 
   static final String imageUrl = "$baseUrl/";
+  static final String imageUpdateUrl = "$baseUrl";
 
   static const String prefix = "/api";
   static const String auth = "/auth";
@@ -22,6 +23,8 @@ class Api {
   static final String getAllEvents = "$baseUrl$prefix$auth/getallevent";
 
   static final String storeEvent = "$baseUrl$prefix$auth/store-event";
+  static final String updateEvent = "$baseUrl$prefix$auth/updateevent";
+
   static final String becomeOrganizer = "$baseUrl$prefix$auth/become-organizer";
   static final String eventDetails =
       "$baseUrl$prefix$auth/geteventdetails/#id#";

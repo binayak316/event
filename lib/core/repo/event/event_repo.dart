@@ -171,6 +171,53 @@ class EventRepo {
     }
   }
 
+  static Future<void> updateEvent({
+    required eventId,
+    required AddEventRequestParams? addEventParams,
+    required File? file,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = "${Api.updateEvent}/$eventId";
+      List<http.MultipartFile> images = [];
+      if (file != null) {
+        images = [
+          http.MultipartFile.fromBytes(
+            "thumbnail",
+            await file.readAsBytes(),
+            filename: "image",
+            contentType: MediaType("image", "*"),
+          )
+        ];
+      }
+
+      http.StreamedResponse response = await AppRequest.multiPart(
+        url: url,
+        files: images,
+        // fields: json.encode(menuRequestParams?.toJson()),
+        fields: addEventParams?.toJson(),
+        // fields: encodedParams,
+      );
+
+      print("----------------${response}");
+
+      dynamic data = json.decode(await response.stream.bytesToString());
+
+      print("--------------response-------------$data");
+
+      if (data['status']) {
+        var msg = data['message'];
+        onSuccess(msg);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error("${Api.updateEvent}/$eventId", error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
   static Future<void> getPopularEvents({
     required Function(List<EventModel> events) onSuccess,
     required Function(String message) onError,

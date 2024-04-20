@@ -30,7 +30,8 @@ class Event extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KhaltiScope(
-      publicKey: "test_public_key_307850aa01dd432799359e427571f6a7",
+      // publicKey: "test_public_key_307850aa01dd432799359e427571f6a7",
+      publicKey: "test_public_key_58748be8be1e4b71b3b76aa04a6df48e",
       builder: (context, navigatorKey) {
         return GetMaterialApp(
           title: "Event",

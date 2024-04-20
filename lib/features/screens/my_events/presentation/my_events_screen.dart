@@ -5,6 +5,8 @@ import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/common_alert.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
+import 'package:event/core/widgets/common/empty_view.dart';
+import 'package:event/core/widgets/common/error_view.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:event/features/screens/add_event/update_event_screen.dart';
 import 'package:event/features/screens/my_events/controller/my_event_controller.dart';
@@ -48,8 +50,11 @@ class MyEventsScreen extends StatelessWidget {
                       child: LinearProgressIndicator(),
                     );
                   } else if (c.pageState.value == PageState.EMPTY) {
-                    return Center(
-                      child: Text("Empty"),
+                    return EmptyView(
+                      message: "No events available",
+                      title: "Not available",
+                      media: IconPath.searching,
+                      mediaSize: Get.height / 4,
                     );
                   } else if (c.pageState.value == PageState.NORMAL) {
                     return ListView.separated(
@@ -76,8 +81,11 @@ class MyEventsScreen extends StatelessWidget {
                         },
                         itemCount: c.eventList.length);
                   } else {
-                    return Center(
-                      child: Text("Error View"),
+                    return ErrorView(
+                      message: "No any  events available right now",
+                      title: "No Data Available.",
+                      media: IconPath.error,
+                      // mediaSize: Get.height / 4,
                     );
                   }
                 })

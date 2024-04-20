@@ -3,7 +3,10 @@ import 'package:event/core/model/event/event_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/enums.dart';
+import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
+import 'package:event/core/widgets/common/empty_view.dart';
+import 'package:event/core/widgets/common/error_view.dart';
 import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,8 +38,11 @@ class MyBookedEventsScreen extends StatelessWidget {
                     child: LinearProgressIndicator(),
                   );
                 } else if (c.pageState.value == PageState.EMPTY) {
-                  return Center(
-                    child: Text("Empty"),
+                  return EmptyView(
+                    message: "No booked events available",
+                    title: "Not available",
+                    media: IconPath.searching,
+                    mediaSize: Get.height / 4,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.separated(
@@ -55,8 +61,11 @@ class MyBookedEventsScreen extends StatelessWidget {
                       },
                       itemCount: c.bookedEventList.length);
                 } else {
-                  return Center(
-                    child: Text("Error View"),
+                  return ErrorView(
+                    message: "No any booked events right now",
+                    title: "No Data Available.",
+                    media: IconPath.error,
+                    // mediaSize: Get.height / 4,
                   );
                 }
               })

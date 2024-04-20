@@ -1,12 +1,19 @@
+import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
+import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:event/core/controllers/dashscreen/event/update_event_controller.dart';
 import 'package:event/core/utils/constants/colors.dart';
+import 'package:event/core/utils/constants/icon_paths.dart';
+import 'package:event/core/utils/helpers/image_helper.dart';
 import 'package:event/core/utils/helpers/validators.dart';
 import 'package:event/core/widgets/common/button.dart';
 import 'package:event/core/widgets/common/custom_text_style.dart';
+import 'package:event/core/widgets/common/network_imge.dart';
 import 'package:event/core/widgets/common/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpdateEventScreen extends StatelessWidget {
   static const String routeName = "/update-evnt-screen";
@@ -59,32 +66,32 @@ class UpdateEventScreen extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  // Obx(
-                  //   () => PrimaryTextField(
-                  //     hint: "Event Date",
-                  //     textInputAction: TextInputAction.next,
-                  //     textInputType: TextInputType.emailAddress,
-                  //     validator: Validators.checknameEmpty,
-                  //     readOnly: true,
-                  //     suffixIcon: c.isDobHasData.value == true
-                  //         ? InkResponse(
-                  //             onTap: () {
-                  //               c.eventDateController.clear();
-                  //               c.isDobHasData.value = false;
-                  //             },
-                  //             child: const Icon(
-                  //               Icons.clear,
-                  //               color: AppColors.primary,
-                  //             ),
-                  //           )
-                  //         : const Icon(
-                  //             Icons.calendar_month,
-                  //             color: AppColors.primary,
-                  //           ),
-                  //     controller: c.eventDateController,
-                  //     onTap: c.pickDate,
-                  //   ),
-                  // ),
+                  Obx(
+                    () => PrimaryTextField(
+                      hint: "Event Date",
+                      textInputAction: TextInputAction.next,
+                      textInputType: TextInputType.emailAddress,
+                      validator: Validators.checknameEmpty,
+                      readOnly: true,
+                      suffixIcon: c.isDobHasData.value == true
+                          ? InkResponse(
+                              onTap: () {
+                                c.eventDateController.clear();
+                                c.isDobHasData.value = false;
+                              },
+                              child: const Icon(
+                                Icons.clear,
+                                color: AppColors.primary,
+                              ),
+                            )
+                          : const Icon(
+                              Icons.calendar_month,
+                              color: AppColors.primary,
+                            ),
+                      controller: c.eventDateController,
+                      onTap: c.pickDate,
+                    ),
+                  ),
                   const SizedBox(
                     height: 4,
                   ),
@@ -96,40 +103,40 @@ class UpdateEventScreen extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  // PrimaryTextField(
-                  //   hint: "Event Time",
-                  //   textInputAction: TextInputAction.next,
-                  //   textInputType: TextInputType.emailAddress,
-                  //   validator: Validators.checknameEmpty,
-                  //   suffixIcon: const Icon(
-                  //     Icons.watch_later_outlined,
-                  //     color: Colors.grey,
-                  //   ),
-                  //   readOnly: true,
-                  //   onTap: () {
-                  //     Navigator.of(context).push(
-                  //       showPicker(
-                  //         context: context,
-                  //         value: Time(
-                  //           hour: c.time.hour,
-                  //           minute: c.time.minute,
-                  //         ),
-                  //         sunrise: TimeOfDay(hour: 6, minute: 0), // optional
-                  //         sunset: TimeOfDay(hour: 18, minute: 0), // optional
-                  //         duskSpanInMinutes: 120, // optional
-                  //         is24HrFormat: false,
+                  PrimaryTextField(
+                    hint: "Event Time",
+                    textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.emailAddress,
+                    validator: Validators.checknameEmpty,
+                    suffixIcon: const Icon(
+                      Icons.watch_later_outlined,
+                      color: Colors.grey,
+                    ),
+                    readOnly: true,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        showPicker(
+                          context: context,
+                          value: Time(
+                            hour: c.time.hour,
+                            minute: c.time.minute,
+                          ),
+                          sunrise: TimeOfDay(hour: 6, minute: 0), // optional
+                          sunset: TimeOfDay(hour: 18, minute: 0), // optional
+                          duskSpanInMinutes: 120, // optional
+                          is24HrFormat: false,
 
-                  //         onChange: (Time newTime) {
-                  //           print('Selected time: $newTime');
-                  //           String formattedTime =
-                  //               '${newTime.hour}:${newTime.minute}';
-                  //           c.eventTimeController.text = formattedTime;
-                  //         },
-                  //       ),
-                  //     );
-                  //   },
-                  //   controller: c.eventTimeController,
-                  // ),
+                          onChange: (Time newTime) {
+                            print('Selected time: $newTime');
+                            String formattedTime =
+                                '${newTime.hour}:${newTime.minute}';
+                            c.eventTimeController.text = formattedTime;
+                          },
+                        ),
+                      );
+                    },
+                    controller: c.eventTimeController,
+                  ),
                   const SizedBox(
                     height: 4,
                   ),
@@ -206,47 +213,47 @@ class UpdateEventScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Stack(
-                  //   children: [
-                  //     ClipRRect(
-                  //       borderRadius: BorderRadius.circular(100),
-                  //       child: Obx(() {
-                  //         final file = c.pickedFile.value;
-                  //         if (file != null) {
-                  //           return Image.file(
-                  //             file,
-                  //             height: 100,
-                  //             width: 100,
-                  //             fit: BoxFit.cover,
-                  //           );
-                  //         } else {
-                  //           return const SkyNetworkImage(
-                  //             imageUrl: "",
-                  //             height: 100,
-                  //             width: 100,
-                  //           );
-                  //         }
-                  //       }),
-                  //     ),
-                  //     Positioned(
-                  //       bottom: 5,
-                  //       right: 10,
-                  //       child: InkResponse(
-                  //         onTap: () {
-                  //           ImageHelper.pickImage(
-                  //               imageSource: ImageSource.gallery,
-                  //               onPickImage: (imageFile) {
-                  //                 c.pickImage(imageFile);
-                  //               });
-                  //         },
-                  //         child: SvgPicture.asset(
-                  //           IconPath.camera,
-                  //           height: 20,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Obx(() {
+                          final file = c.pickedFile.value;
+                          if (file != null) {
+                            return Image.file(
+                              file,
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.cover,
+                            );
+                          } else {
+                            return const SkyNetworkImage(
+                              imageUrl: "",
+                              height: 100,
+                              width: 100,
+                            );
+                          }
+                        }),
+                      ),
+                      Positioned(
+                        bottom: 5,
+                        right: 10,
+                        child: InkResponse(
+                          onTap: () {
+                            ImageHelper.pickImage(
+                                imageSource: ImageSource.gallery,
+                                onPickImage: (imageFile) {
+                                  c.pickImage(imageFile);
+                                });
+                          },
+                          child: SvgPicture.asset(
+                            IconPath.camera,
+                            height: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -331,10 +338,10 @@ class UpdateEventScreen extends StatelessWidget {
                     validator: Validators.checkFieldEmpty,
                     controller: c.totalVipSeatsController,
                     onTap: () {
-                      // c.onCalculateTotalSeat();
+                      c.onCalculateTotalSeat();
                     },
                     onValueChange: (value) {
-                      // c.onCalculateTotalSeat();
+                      c.onCalculateTotalSeat();
                     },
                   ),
 
@@ -359,10 +366,10 @@ class UpdateEventScreen extends StatelessWidget {
                     validator: Validators.checkFieldEmpty,
                     controller: c.totalPublicseatsController,
                     onTap: () {
-                      // c.onCalculateTotalSeat();
+                      c.onCalculateTotalSeat();
                     },
                     onValueChange: (value) {
-                      // c.onCalculateTotalSeat();
+                      c.onCalculateTotalSeat();
                     },
                   ),
                   Text(
@@ -389,10 +396,11 @@ class UpdateEventScreen extends StatelessWidget {
                     height: 10,
                   ),
                   PrimaryElevatedButton(
-                      onPressed: () {
-                        // c.onSubmit();
-                      },
-                      title: "Add"),
+                    onPressed: () {
+                      // c.onSubmit();
+                    },
+                    title: "Update",
+                  ),
                   // const SizedBox(
                   //   height: 50,
                   // ),
