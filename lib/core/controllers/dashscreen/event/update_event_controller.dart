@@ -1,7 +1,12 @@
 import 'dart:io';
 
-import 'package:event/core/utils/constants/apis.dart';
+import 'package:event/core/model/event/add_event_request_model.dart';
+import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/helpers/xosial_date_piceker.dart';
+import 'package:event/core/widgets/custom/app_progress_dialog.dart';
+import 'package:event/core/widgets/custom/app_snackbar.dart';
+import 'package:event/features/screens/add_event/show_venue_location_bottom_sheet.dart';
+import 'package:event/features/screens/my_events/controller/my_event_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,6 +51,7 @@ class UpdateEventController extends GetxController {
     super.onInit();
   }
 
+  RxString imageUrl = RxString("");
   onLoading() {
     eventNameController.text = event.value?.eventTitle ?? "";
     eventDateController.text = event.value?.eventDate ?? "";
@@ -70,17 +76,17 @@ class UpdateEventController extends GetxController {
 
     // pickedFile.value = event.value?.thumbnail ?? "";
 
-    final String? thumbnail = event.value?.thumbnail;
-    if (thumbnail != null) {
-      // Construct full URL for the thumbnail
-      final String fullUrl = Api.imageUpdateUrl + thumbnail;
-      // Assign the full URL to pickedFile.value
-      pickedFile.value = File(fullUrl);
-    }
-  }
+    // final String? thumbnail = event.value?.thumbnail;
+    // if (thumbnail != null) {
+    //   // Construct full URL for the thumbnail
+    //   final String fullUrl = Api.imageUpdateUrl + thumbnail;
+    //   // Assign the full URL to pickedFile.value
+    //   pickedFile.value = File(fullUrl);
+    // }
 
-  // imageUrl: "${Api.imageUrl}${eventModel.thumbnail}",
-  // String imageUrl = Api.imageUpdateUrl;
+    // --------------
+    imageUrl.value = event.value?.thumbnail ?? "";
+  }
 
   onCalculateTotalSeat() {
     var totalSeat = int.parse(totalPublicseatsController.text) +
@@ -102,11 +108,85 @@ class UpdateEventController extends GetxController {
     );
   }
 
+  showVenueLocation() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: VenueLocationBottomSheet(
+            onSelectVenue: (venueType) {
+              eventVenueController.text = venueType;
+            },
+          ),
+        );
+      },
+    );
+  }
+
   final Rx<File?> pickedFile = Rx<File?>(null);
 
   // Your other controller code...
 
   Future<void> pickImage(XFile imageFile) async {
     pickedFile.value = File(imageFile.path);
+  }
+
+  void clearVariables() {
+    eventNameController.text = '';
+    eventDateController.text = '';
+    eventTimeController.text = '';
+    eventTypeController.text = '';
+    pickedFile.value = null;
+    eventVenueController.clear();
+    eventVipPriceController.text = '';
+    totalSeatsController.text = '';
+    eventPublicPriceController.text = '';
+    eventDescriptionController.text = '';
+    totalVipSeatsController.text = '';
+    totalPublicseatsController.text = '';
+  }
+
+  ProgressDialog loading = ProgressDialog();
+
+  Future<void> updateEvent() async {
+    loading.show();
+    AddEventRequestParams addEventRequestParams = AddEventRequestParams(
+      eventTitle: eventNameController.text,
+      eventDate: eventDateController.text,
+      eventTime: eventTimeController.text,
+      // category: int.parse(categoryModel.value!.id!.toString()),
+      // thumbnail: pickedFile.toString(),
+      location: eventVenueController.text,
+      vipSeatsPrice: eventVipPriceController.text,
+      totalSeats: totalSeatsController.text,
+      publicSeatsPrice: eventPublicPriceController.text,
+      description: eventDescriptionController.text,
+      totalVipSeats: totalVipSeatsController.text,
+      totalPublicSeats: totalPublicseatsController.text,
+    );
+    await EventRepo.updateEvent(
+        eventId: event.value!.id!,
+        addEventParams: addEventRequestParams,
+        file: pickedFile.value,
+        onSuccess: (message) {
+          loading.hide();
+          // Get.offAllNamed(DashPageManager.routeName);
+          // Get.put(DashboardPanelController()).currentIndex.value =
+          //     0; //TODO implementation
+          clearVariables();
+          Get.find<myEventController>().getMyEvents();
+          Get.back();
+          GearSnackBar.success(
+              title: "Update Event Success",
+              message: "Event Updated successfully");
+        },
+        onError: (message) {
+          loading.hide();
+          GearSnackBar.error(title: "Update Failed", message: message);
+        });
   }
 }

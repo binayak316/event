@@ -162,8 +162,8 @@ class MyEventRowWidget extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                               text: event.eventDate != null
-                                  ? '${event.eventDate} /VIP Rs. ${event.vipSeatsPrice}'
-                                  : '${event.eventDate} | N/A}',
+                                  ? '${event.eventDate}'
+                                  : '',
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -171,6 +171,26 @@ class MyEventRowWidget extends StatelessWidget {
                             )
                           ]),
                     ),
+
+                  RichText(
+                    text: TextSpan(
+                        text: 'VIP Seat Price: ',
+                        style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: event.vipSeatsPrice != null
+                                ? 'Rs. ${event.vipSeatsPrice}'
+                                : "N/A",
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ]),
+                  ),
                   if (event.eventTime != null)
                     RichText(
                       text: TextSpan(

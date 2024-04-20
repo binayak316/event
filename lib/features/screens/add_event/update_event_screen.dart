@@ -1,6 +1,7 @@
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:event/core/controllers/dashscreen/event/update_event_controller.dart';
+import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/colors.dart';
 import 'package:event/core/utils/constants/icon_paths.dart';
 import 'package:event/core/utils/helpers/image_helper.dart';
@@ -26,6 +27,15 @@ class UpdateEventScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text("${c.event.value?.eventTitle ?? "Update Event"}"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  // print(c.pickedFile.value);
+                  // print("${${Api.imageUpdateUrl} ${c.imageUrl}" }")
+                  print("${Api.imageUpdateUrl}${c.imageUrl}");
+                },
+                icon: Icon(Icons.add))
+          ],
         ),
         body: SingleChildScrollView(
           // physics: ClampingScrollPhysics(),
@@ -140,34 +150,8 @@ class UpdateEventScreen extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  Text(
-                    "Event Type",
-                    style:
-                        CustomTextStyles.f16W400(color: AppColors.blackColor),
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  PrimaryTextField(
-                    hint: "Event Type",
-                    textInputAction: TextInputAction.next,
-                    textInputType: TextInputType.emailAddress,
-                    readOnly: true,
-                    validator: Validators.checknameEmpty,
-                    controller: c.eventTypeController,
-                    suffixIcon: const Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      color: Colors.grey,
-                    ),
-                    onTap: () {
-                      // c.showVenueType();
-                    },
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
                   // Text(
-                  //   "Expected guest no.",
+                  //   "Event Type",
                   //   style:
                   //       CustomTextStyles.f16W400(color: AppColors.blackColor),
                   // ),
@@ -175,18 +159,24 @@ class UpdateEventScreen extends StatelessWidget {
                   //   height: 4,
                   // ),
                   // PrimaryTextField(
-                  //   hint: "Expected guest no.", //text field no dropdown
+                  //   hint: "Event Type",
                   //   textInputAction: TextInputAction.next,
-                  //   textInputType: TextInputType.number,
-                  //   inputFormatters: <TextInputFormatter>[
-                  //     FilteringTextInputFormatter.digitsOnly
-                  //   ],
+                  //   textInputType: TextInputType.emailAddress,
+                  //   readOnly: true,
                   //   validator: Validators.checknameEmpty,
-                  //   controller: c.eventGuestsNoController,
+                  //   controller: c.eventTypeController,
+                  //   suffixIcon: const Icon(
+                  //     Icons.keyboard_arrow_down_outlined,
+                  //     color: Colors.grey,
+                  //   ),
+                  //   onTap: () {
+                  //     // c.showVenueType();
+                  //   },
                   // ),
                   // const SizedBox(
                   //   height: 4,
                   // ),
+
                   Text(
                     "Select Veneu",
                     style:
@@ -203,7 +193,7 @@ class UpdateEventScreen extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     onTap: () {
-                      // c.showVenueLocation();
+                      c.showVenueLocation();
                     },
                     textInputAction: TextInputAction.next,
                     textInputType: TextInputType.emailAddress,
@@ -227,11 +217,17 @@ class UpdateEventScreen extends StatelessWidget {
                               fit: BoxFit.cover,
                             );
                           } else {
-                            return const SkyNetworkImage(
-                              imageUrl: "",
-                              height: 100,
-                              width: 100,
+                            print("else hai ");
+                            print("${Api.imageUpdateUrl}${c.imageUrl}");
+                            return Obx(
+                              () => SkyNetworkImage(
+                                imageUrl: "${Api.imageUpdateUrl}${c.imageUrl}",
+                                height: 100,
+                                width: 100,
+                              ),
                             );
+                            // return Obx(() => Image.network(
+                            //     "${Api.imageUpdateUrl}${c.imageUrl}"));
                           }
                         }),
                       ),
@@ -397,7 +393,7 @@ class UpdateEventScreen extends StatelessWidget {
                   ),
                   PrimaryElevatedButton(
                     onPressed: () {
-                      // c.onSubmit();
+                      c.updateEvent();
                     },
                     title: "Update",
                   ),
