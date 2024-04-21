@@ -5,6 +5,7 @@ import 'package:event/core/widgets/common/custom_text_style.dart';
 import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/favourites/presentation/favourites_screen.dart';
 import 'package:event/features/screens/my_events/presentation/my_events_screen.dart';
+import 'package:event/features/screens/profile/change_password_screen.dart';
 import 'package:event/features/screens/profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -254,7 +255,8 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 ProfileTiles(
                   onTap: () {
-                    c.openBottomSheetChangePW();
+                    // c.openBottomSheetChangePW();
+                    Get.toNamed(ChangePassword.routeName);
                   },
                   title: "Change password",
                 ),

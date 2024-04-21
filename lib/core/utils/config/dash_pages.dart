@@ -11,6 +11,7 @@ import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:event/features/screens/favourites/controller/favourite_controller.dart';
 import 'package:event/features/screens/home/search_event_screen.dart';
+import 'package:event/features/screens/profile/change_password_screen.dart';
 import 'package:event/features/screens/profile/update_profile_screen.dart';
 import 'package:get/get.dart';
 
@@ -46,7 +47,7 @@ final List<GetPage> dashScreenPages = <GetPage>[
     ),
   ),
 
-   GetPage(
+  GetPage(
     name: UpdateEventScreen.routeName,
     page: () => UpdateEventScreen(),
     binding: BindingsBuilder(
@@ -82,6 +83,16 @@ final List<GetPage> dashScreenPages = <GetPage>[
     binding: BindingsBuilder(
       () {
         Get.lazyPut(() => myEventController());
+      },
+    ),
+  ),
+
+  GetPage(
+    name: ChangePassword.routeName,
+    page: () => ChangePassword(),
+    binding: BindingsBuilder(
+      () {
+        // Get.lazyPut(() => myEventController());
       },
     ),
   ),

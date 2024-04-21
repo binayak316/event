@@ -34,6 +34,7 @@ class ProfileController extends GetxController {
     showModalBottomSheet(
       backgroundColor: AppColors.whiteColor,
       context: Get.context!,
+      showDragHandle: true,
       builder: (context) {
         return ChangePassword();
       },

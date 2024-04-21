@@ -8,23 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChangePassword extends StatelessWidget {
+  static const String routeName = "/change-pw-screen";
   final c = Get.find<ProfileController>();
   ChangePassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-      child: Column(mainAxisSize: MainAxisSize.max, children: [
-        Container(
-          // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          // height: MediaQuery.of(context).size.height * 0.4,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(14),
-              topRight: Radius.circular(14),
-            ),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Change Password"),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Form(
             key: c.resetPwKey,
             child: Column(
@@ -56,18 +53,7 @@ class ChangePassword extends StatelessWidget {
                     controller: c.passwordConfirmController,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.emailAddress,
-                    validator: (value) {
-                      var checkPassword = Validators.checkPasswordField(value);
-                      if (checkPassword != null) {
-                        return checkPassword;
-                      }
-
-                      if (c.passwordController.text != value!) {
-                        return "Password does not match";
-                      }
-                      return null;
-                    },
-                    // validator: Validators.checkPasswordField,
+                    validator: Validators.checkPasswordField,
                   ),
                 ),
                 const SizedBox(height: 60),
@@ -81,7 +67,7 @@ class ChangePassword extends StatelessWidget {
             ),
           ),
         ),
-      ]),
+      ),
     );
   }
 }
