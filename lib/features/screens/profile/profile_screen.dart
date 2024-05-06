@@ -241,12 +241,12 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                 ProfileTiles(
+                ProfileTiles(
                   onTap: () {
                     Get.toNamed(FAQScreen.routeName);
                   },
                   iconUrl: IconPath.information,
-                  title: "Vote Polls",
+                  title: "Faq",
                 ),
                 const SizedBox(
                   height: 10,
