@@ -10,6 +10,7 @@ import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/messages.dart';
 import 'package:event/core/utils/helpers/app_requests.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
+import 'package:event/features/screens/profile/faq_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
@@ -544,6 +545,31 @@ class EventRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.getEventById, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getFaq({
+    required Function(List<FAQModel> faqs) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.faq;
+
+      http.Response response = await AppRequest.get(
+        url,
+      );
+
+      dynamic data = json.decode(response.body);
+
+      if (data['status']) {
+        var faqs = faqsFromJson(data['data']);
+        onSuccess(faqs);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.faq, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

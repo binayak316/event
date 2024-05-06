@@ -6,6 +6,7 @@ import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/favourites/presentation/favourites_screen.dart';
 import 'package:event/features/screens/my_events/presentation/my_events_screen.dart';
 import 'package:event/features/screens/profile/change_password_screen.dart';
+import 'package:event/features/screens/profile/polls_screen.dart';
 import 'package:event/features/screens/profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -237,6 +238,16 @@ class ProfileScreen extends StatelessWidget {
                     iconUrl: IconPath.organizer,
                     title: "Become an Organizer",
                   ),
+                const SizedBox(
+                  height: 10,
+                ),
+                 ProfileTiles(
+                  onTap: () {
+                    Get.toNamed(FAQScreen.routeName);
+                  },
+                  iconUrl: IconPath.information,
+                  title: "Vote Polls",
+                ),
                 const SizedBox(
                   height: 10,
                 ),

@@ -52,4 +52,5 @@ class Api {
   static final String getEventById = "$baseUrl$prefix/auth/categorywiseevent/2";
 
   static final String updateProfile = "$baseUrl$prefix/auth/updateprofile";
+  static final String faq = "$baseUrl$prefix/auth/getallfaq";
 }
