@@ -28,6 +28,9 @@ class DashboardPanelController extends GetxController {
     //   return;
     // }
     currentIndex.value = index;
+    // Get.find<HomeScreenController>().getAllCategories();
+    // Get.find<HomeScreenController>().getAllEvents();
+
     pageController.jumpToPage(index);
     return;
     // }

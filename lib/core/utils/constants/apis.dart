@@ -49,7 +49,7 @@ class Api {
 
   static String checkWishListUrl = "$baseUrl$prefix/auth/wishlist-check";
 
-  static final String getEventById = "$baseUrl$prefix/auth/categorywiseevent/2";
+  static final String getEventById = "$baseUrl$prefix/auth/categorywiseevent";
 
   static final String updateProfile = "$baseUrl$prefix/auth/updateprofile";
   static final String faq = "$baseUrl$prefix/auth/getallfaq";

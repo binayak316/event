@@ -527,7 +527,7 @@ class EventRepo {
     required Function(String message) onError,
   }) async {
     try {
-      String url = "${Api.getEventById}?id=$categoryId";
+      String url = "${Api.getEventById}/$categoryId";
 
       http.Response response = await AppRequest.get(
         url,

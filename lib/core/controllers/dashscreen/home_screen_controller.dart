@@ -12,6 +12,7 @@ import 'package:event/core/repo/event/event_repo.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 class HomeScreenController extends GetxController {
   final coreController = Get.find<CoreController>();
@@ -28,12 +29,22 @@ class HomeScreenController extends GetxController {
     super.onInit();
   }
 
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  void onRefresh() async {
+    LogHelper.info("-------------------------refresh------------------------");
+    await Future.delayed(const Duration(milliseconds: 500));
+    getAllCategories();
+    getAllEvents();
+    // initScrollListner();
+    refreshController.refreshCompleted();
+  }
+
 // //   RxInt tappedIndex = RxInt(0);
 
 // //   RxString movieDateStore = RxString("");
 
   RxInt selectedIndex = (-1).obs;
-
 
   void getAllCategories() async {
     categoryList.clear();
@@ -52,7 +63,6 @@ class HomeScreenController extends GetxController {
       },
     );
   }
-
 
   void getProductsByCategoryId(int categoryId) async {
     eventList.clear();
