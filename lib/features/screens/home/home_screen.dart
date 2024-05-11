@@ -48,173 +48,170 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(
           16,
         ),
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 10,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            PrimaryTextField(
+              prefixIcon: const Icon(
+                Icons.search,
+                color: AppColors.blackColor,
               ),
-              PrimaryTextField(
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: AppColors.blackColor,
-                ),
-                readOnly: true,
-                onTap: () {
-                  Get.toNamed(SearchEventScreen.routeName);
-                },
-                hint: "Search event",
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.name,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 50,
-                child: Obx(() {
-                  if (c.pageState.value == PageState.LOADING) {
-                    return Center(
-                      child: LinearProgressIndicator(),
-                    );
-                  } else if (c.pageState.value == PageState.EMPTY) {
-                    return Center(
-                      child: Text("Empty"),
-                    );
-                  } else if (c.pageState.value == PageState.NORMAL) {
-                    return Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            c.selectedIndex.value = -1;
-                            c.getAllEvents();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
-                            decoration: BoxDecoration(
-                              color: c.selectedIndex.value == -1
-                                  ? AppColors.primary
-                                  : AppColors.whiteColor,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Text(
-                              "All",
-                              style: CustomTextStyles.f16W300(
-                                  color: c.selectedIndex.value == -1
-                                      ? AppColors.whiteColor
-                                      : AppColors.primary),
-                            ),
+              readOnly: true,
+              onTap: () {
+                Get.toNamed(SearchEventScreen.routeName);
+              },
+              hint: "Search event",
+              textInputAction: TextInputAction.done,
+              textInputType: TextInputType.name,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 50,
+              child: Obx(() {
+                if (c.pageState.value == PageState.LOADING) {
+                  return Center(
+                    child: LinearProgressIndicator(),
+                  );
+                } else if (c.pageState.value == PageState.EMPTY) {
+                  return Center(
+                    child: Text("Empty"),
+                  );
+                } else if (c.pageState.value == PageState.NORMAL) {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          c.selectedIndex.value = -1;
+                          c.getAllEvents();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          decoration: BoxDecoration(
+                            color: c.selectedIndex.value == -1
+                                ? AppColors.primary
+                                : AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            "All",
+                            style: CustomTextStyles.f16W300(
+                                color: c.selectedIndex.value == -1
+                                    ? AppColors.whiteColor
+                                    : AppColors.primary),
                           ),
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Expanded(
-                          // height: 50,
-                          child: ListView.separated(
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(
-                                  width: 5,
-                                );
-                              },
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              physics: ClampingScrollPhysics(),
-                              itemCount: c.categoryList.length,
-                              itemBuilder: (context, index) {
-                                var category = c.categoryList[index];
-                                if (category != null) {
-                                  return Obx(
-                                    () => GestureDetector(
-                                      onTap: () {
-                                        c.selectedIndex.value = index;
-                                        c.getProductsByCategoryId(category.id!);
-                                      },
-                                      child: EventCategory(
-                                        categoryModel: category,
-                                        backgroundColor: index ==
-                                                c.selectedIndex.value
-                                            ? AppColors
-                                                .primary // Change background color if index matches selected index
-                                            : AppColors.whiteColor,
-                                        textColor: index ==
-                                                c.selectedIndex.value
-                                            ? AppColors
-                                                .whiteColor // Change text color if index matches selected index
-                                            : AppColors.primary,
-
-                                        // backgroundColor: AppColors.primary,
-                                        // textColor: AppColors.whiteColor,
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return const Center(
-                                    child: Text(
-                                        "Error while fetching the categories"),
-                                  );
-                                }
-                              }),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Center(
-                      child: Text("Something went wrong"),
-                    );
-                  }
-                }),
-              ),
-              Text(
-                "Popular Events",
-                style: CustomTextStyles.f20W600(color: AppColors.primary),
-              ),
-              Expanded(
-                child: Obx(() {
-                  if (c.pageState.value == PageState.LOADING) {
-                    return CategoryShimmer.categoryGrid();
-                  } else if (c.pageState.value == PageState.EMPTY) {
-                    return EmptyView(
-                      message: "No data available",
-                      title: "Not available",
-                      media: IconPath.searching,
-                      mediaSize: Get.height / 4,
-                    );
-                  } else if (c.pageState.value == PageState.NORMAL) {
-                    return SizedBox(
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // number of items in each row
-                          mainAxisSpacing: 20, // spacing between rows
-                          crossAxisSpacing: 20,
-                          mainAxisExtent: 190,
-                          // childAspectRatio: 0.8 // spacing between columns
-                        ),
-                        itemCount: c.eventList.length,
-                        itemBuilder: (context, index) {
-                          var product = c.eventList[index];
-                          return EventCard(
-                            event: product,
-                          );
-                        },
                       ),
-                    );
-                  } else {
-                    return ErrorView(
-                      message: "No Data Available.",
-                      title: "No Data available at the moment",
-                      media: IconPath.error,
-                      // mediaSize: Get.height / 4,
-                    );
-                  }
-                }),
-              )
-            ],
-          ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        // height: 50,
+                        child: ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                width: 5,
+                              );
+                            },
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: c.categoryList.length,
+                            itemBuilder: (context, index) {
+                              var category = c.categoryList[index];
+                              if (category != null) {
+                                return Obx(
+                                  () => GestureDetector(
+                                    onTap: () {
+                                      c.selectedIndex.value = index;
+                                      c.getProductsByCategoryId(category.id!);
+                                    },
+                                    child: EventCategory(
+                                      categoryModel: category,
+                                      backgroundColor: index ==
+                                              c.selectedIndex.value
+                                          ? AppColors
+                                              .primary // Change background color if index matches selected index
+                                          : AppColors.whiteColor,
+                                      textColor: index == c.selectedIndex.value
+                                          ? AppColors
+                                              .whiteColor // Change text color if index matches selected index
+                                          : AppColors.primary,
+
+                                      // backgroundColor: AppColors.primary,
+                                      // textColor: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: Text(
+                                      "Error while fetching the categories"),
+                                );
+                              }
+                            }),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Center(
+                    child: Text("Something went wrong"),
+                  );
+                }
+              }),
+            ),
+            Text(
+              "Popular Events",
+              style: CustomTextStyles.f20W600(color: AppColors.primary),
+            ),
+            Expanded(
+              child: Obx(() {
+                if (c.pageState.value == PageState.LOADING) {
+                  return CategoryShimmer.categoryGrid();
+                } else if (c.pageState.value == PageState.EMPTY) {
+                  return EmptyView(
+                    message: "No data available",
+                    title: "Not available",
+                    media: IconPath.searching,
+                    mediaSize: Get.height / 4,
+                  );
+                } else if (c.pageState.value == PageState.NORMAL) {
+                  return SizedBox(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // number of items in each row
+                        mainAxisSpacing: 20, // spacing between rows
+                        crossAxisSpacing: 20,
+                        mainAxisExtent: 190,
+                        // childAspectRatio: 0.8 // spacing between columns
+                      ),
+                      itemCount: c.eventList.length,
+                      itemBuilder: (context, index) {
+                        var product = c.eventList[index];
+                        return EventCard(
+                          event: product,
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return ErrorView(
+                    message: "No Data Available.",
+                    title: "No Data available at the moment",
+                    media: IconPath.error,
+                    // mediaSize: Get.height / 4,
+                  );
+                }
+              }),
+            )
+          ],
         ),
       ),
     );

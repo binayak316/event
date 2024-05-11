@@ -274,13 +274,13 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                ProfileTiles(
-                  title: "Contact",
-                  onTap: () {},
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // ProfileTiles(
+                //   title: "Contact",
+                //   onTap: () {},
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
                 ProfileTiles(
                   onTap: () {
                     showDialog(
