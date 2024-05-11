@@ -11,6 +11,7 @@ import 'package:event/features/screens/profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/widgets/common/common_alert.dart';
 import '../../../core/widgets/common/network_imge.dart';
@@ -274,13 +275,24 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                // ProfileTiles(
-                //   title: "Contact",
-                //   onTap: () {},
-                // ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
+                ProfileTiles(
+                  title: "Contact",
+                  onTap: () {
+                    _launchURL() async {
+                      final Uri url = Uri.parse(
+                          'https://www.facebook.com/profile.php?id=61558812564716');
+                      if (!await launchUrl(url)) {
+                        throw Exception('Could not launch');
+                      }
+                    }
+
+                    // Call _launchURL() to launch the URL when the tile is tapped
+                    _launchURL();
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 ProfileTiles(
                   onTap: () {
                     showDialog(
