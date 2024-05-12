@@ -32,17 +32,17 @@ class HomeScreen extends StatelessWidget {
           "Event",
           style: CustomTextStyles.f28W600(),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                c.getAllCategories();
-                c.getAllEvents();
-              },
-              icon: Icon(
-                Icons.refresh,
-                color: Colors.black,
-              ))
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         c.getAllCategories();
+        //         c.getAllEvents();
+        //       },
+        //       icon: Icon(
+        //         Icons.refresh,
+        //         color: Colors.black,
+        //       ))
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(
@@ -328,14 +328,6 @@ class EventCard extends StatelessWidget {
                         // alignment: Alignment.center,
                       ),
                     ),
-                    // Positioned(
-                    //     right: 0,
-                    //     top: 0,
-                    //     child: SvgPicture.asset(
-                    //       IconPath.fav,
-                    //       height: 20,
-                    //       width: 20,
-                    //     ))
                   ],
                 )),
             Expanded(

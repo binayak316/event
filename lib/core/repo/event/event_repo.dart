@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:event/core/model/category_model.dart';
 import 'package:event/core/model/event/add_event_request_model.dart';
 import 'package:event/core/model/event/event_model.dart';
+import 'package:event/core/model/event/my_booked_event_response_model.dart';
 import 'package:event/core/model/location_model.dart';
 import 'package:event/core/utils/constants/apis.dart';
 import 'package:event/core/utils/constants/messages.dart';
@@ -365,11 +366,12 @@ class EventRepo {
   }
 
   static Future<void> bookedEvents({
-    required Function(List<EventModel> events) onSuccess,
+    // required Function(List<EventModel> events) onSuccess,
+    required Function(List<MyBookedEventResponseModel> events) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.bookedEvents;
+      String url = Api.getbookevent;
 
       http.Response response = await AppRequest.get(
         url,
@@ -379,7 +381,7 @@ class EventRepo {
 
       if (data['status']) {
         // var msg = data['message'];
-        var events = eventsFromJson(data['data']);
+        var events = myBookedEventResponseModeleventsFromJson(data['data']);
         onSuccess(events);
       } else {
         onError(data['message']);

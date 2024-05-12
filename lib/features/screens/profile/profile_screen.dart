@@ -199,14 +199,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                ProfileTiles(
-                  onTap: () {},
-                  iconUrl: IconPath.history,
-                  title: "History",
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+
                 ProfileTiles(
                   onTap: () {
                     Get.toNamed(MyBookedEventsScreen.routeName);

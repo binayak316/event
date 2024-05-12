@@ -31,60 +31,34 @@ class VenueTypeBottomSheet extends StatelessWidget {
             indent: 10,
             height: 20,
           ),
-          // ListView.builder(
-          //   shrinkWrap: true,
-          //   physics: const ClampingScrollPhysics(),
-          //   itemCount: VenueType.values.length,
-          //   itemBuilder: (context, index) {
-          //     final venue = VenueType.values[index];
-          //     return ListTile(
-          //       onTap: () {
-          //         Navigator.of(context).pop();
-          //         onSelectVenueType(venue.toString().split('.').last);
-          //       },
-          //       title: Text(
-          //         venue
-          //             .toString()
-          //             .split('.')
-          //             .last, // Access the enum name directly from 'venue'
-          //         style: CustomTextStyles.f16W400(),
-          //       ),
-          //       dense: true,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(10),
-          //       ),
-          //       tileColor: AppColors.primary,
-          //       selected: true,
-          //       style: ListTileStyle.drawer,
-          //     );
-          //   },
-          // ),
           if (homeController.categoryList.isNotEmpty)
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: homeController.categoryList.length,
-              itemBuilder: (context, index) {
-                var category = homeController.categoryList[index];
-                return ListTile(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    // onSelectVenueType(category.title ?? "");
-                    onSelectVenueType(category);
-                  },
-                  title: Text(
-                    category.title ?? "",
-                    style: CustomTextStyles.f16W400(),
-                  ),
-                  dense: true,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  tileColor: AppColors.primary,
-                  selected: true,
-                  style: ListTileStyle.drawer,
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: homeController.categoryList.length,
+                itemBuilder: (context, index) {
+                  var category = homeController.categoryList[index];
+                  return ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      // onSelectVenueType(category.title ?? "");
+                      onSelectVenueType(category);
+                    },
+                    title: Text(
+                      category.title ?? "",
+                      style: CustomTextStyles.f16W400(),
+                    ),
+                    dense: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    tileColor: AppColors.primary,
+                    selected: true,
+                    style: ListTileStyle.drawer,
+                  );
+                },
+              ),
             ),
         ],
       ),

@@ -7,6 +7,8 @@ import 'package:event/core/controllers/dashscreen/profile/profile_controller.dar
 import 'package:event/core/controllers/dashscreen/profile/update_controller.dart';
 import 'package:event/core/controllers/dashscreen/search_event/search_event_controller.dart';
 import 'package:event/features/screens/add_event/update_event_screen.dart';
+import 'package:event/features/screens/booked_events/booked_event_detail_screen.dart';
+import 'package:event/features/screens/booked_events/controller/booked_event_detail_controller.dart';
 import 'package:event/features/screens/booked_events/my_booked_events.dart';
 import 'package:event/features/screens/events/event_detail_screen.dart';
 import 'package:event/features/screens/favourites/controller/favourite_controller.dart';
@@ -65,6 +67,16 @@ final List<GetPage> dashScreenPages = <GetPage>[
     binding: BindingsBuilder(
       () {
         Get.lazyPut(() => UpdateProfileController());
+      },
+    ),
+  ),
+
+  GetPage(
+    name: BookedEventDetailScreen.routeName,
+    page: () => BookedEventDetailScreen(),
+    binding: BindingsBuilder(
+      () {
+        Get.lazyPut(() => BookedEventDetailController());
       },
     ),
   ),

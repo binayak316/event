@@ -47,6 +47,8 @@ class Api {
   static final String getFavList =
       "$baseUrl$prefix$auth/getorganizerfavouriteevent";
 
+  static final String getbookevent = "$baseUrl$prefix$auth/getbookevent";
+
   static String checkWishListUrl = "$baseUrl$prefix/auth/wishlist-check";
 
   static final String getEventById = "$baseUrl$prefix/auth/categorywiseevent";

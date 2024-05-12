@@ -18,40 +18,49 @@ class EventModel {
   String? vipSeatsPrice;
   String? publicSeatsPrice;
   String? location;
+  // List<PaymentModel>? paymentModel;
 
-  EventModel(
-      {this.id,
-      this.eventTitle,
-      this.description,
-      this.thumbnail,
-      this.eventDate,
-      this.eventTime,
-      this.organizerId,
-      this.totalSeats,
-      this.totalVipSeats,
-      this.totalPublicSeats,
-      // this.totalAvailableVipSeats,
-      // this.totalAvailablePublicSeats,
-      this.vipSeatsPrice,
-      this.publicSeatsPrice,
-      this.location});
+  EventModel({
+    this.id,
+    this.eventTitle,
+    this.description,
+    this.thumbnail,
+    this.eventDate,
+    this.eventTime,
+    this.organizerId,
+    this.totalSeats,
+    this.totalVipSeats,
+    this.totalPublicSeats,
+    // this.totalAvailableVipSeats,
+    // this.totalAvailablePublicSeats,
+    this.vipSeatsPrice,
+    this.publicSeatsPrice,
+    this.location,
+    // this.paymentModel,
+  });
 
   EventModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     eventTitle = json['event_title'];
     description = json['description'];
     thumbnail = json['thumbnail'];
-    eventDate = json['event_date'];
-    eventTime = json['event_time'];
-    organizerId = json['organizer_id'];
-    totalSeats = json['total_seats'];
-    totalVipSeats = json['total_vip_seats'];
-    totalPublicSeats = json['total_public_seats'];
+    eventDate = json['event_date'].toString();
+    eventTime = json['event_time'].toString();
+    organizerId = json['organizer_id'].toString();
+    totalSeats = json['total_seats'].toString();
+    totalVipSeats = json['total_vip_seats'].toString();
+    totalPublicSeats = json['total_public_seats'].toString();
     // totalAvailableVipSeats = json['total_available_vip_seats'];
     // totalAvailablePublicSeats = json['total_available_public_seats'];
-    vipSeatsPrice = json['vip_seats_price'];
-    publicSeatsPrice = json['public_seats_price'];
+    vipSeatsPrice = json['vip_seats_price'].toString();
+    publicSeatsPrice = json['public_seats_price'].toString();
     location = json['location'];
+
+    // if (json['book_events'] != null) {
+    //   paymentModel = paymentEventsFromJson(json['book_events']);
+    // } else {
+    //   paymentModel = [];
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -71,6 +80,10 @@ class EventModel {
     data['vip_seats_price'] = this.vipSeatsPrice;
     data['public_seats_price'] = this.publicSeatsPrice;
     data['location'] = this.location;
+
+    // if (paymentModel != null) {
+    //   data['book_events'] = paymentModel!.map((v) => v).toList();
+    // }
     return data;
   }
 }

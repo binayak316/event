@@ -1,4 +1,4 @@
-import 'package:event/core/model/event/event_model.dart';
+import 'package:event/core/model/event/my_booked_event_response_model.dart';
 import 'package:event/core/utils/constants/enums.dart';
 import 'package:event/core/utils/helpers/log_helper.dart';
 import 'package:get/get.dart';
@@ -6,7 +6,10 @@ import 'package:get/get.dart';
 import '../../../repo/event/event_repo.dart';
 
 class MyBookedEventController extends GetxController {
-  RxList<EventModel> bookedEventList = RxList();
+  // RxList<EventModel> bookedEventList = RxList();
+
+  RxList<MyBookedEventResponseModel> bookedEventList = RxList();
+
   Rx<PageState> pageState = PageState.LOADING.obs;
 
   @override
@@ -32,7 +35,6 @@ class MyBookedEventController extends GetxController {
         if (events.isEmpty) {
           pageState.value = PageState.EMPTY;
         } else {
-          print("-------api events------------${events}");
           bookedEventList.addAll(events);
           pageState.value = PageState.NORMAL;
         }
